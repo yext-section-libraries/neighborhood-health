@@ -1,0 +1,11 @@
+{
+  "id": "neighborhood-health",
+  "displayName": "Neighborhood Health",
+  "vertical": [
+    "HEALTHCARE"
+  ],
+  "purpose": [
+    "LOCATION"
+  ],
+  "pageSetType": "ENTITY"
+}
