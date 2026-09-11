@@ -1,7 +1,5 @@
 import type { SectionConfig } from "@yext/visual-editor";
 
-import * as React from "react";
-import { parsePhoneNumber } from "awesome-phonenumber";
 import type { PuckComponent } from "@puckeditor/core";
 import {
   Background,
@@ -11,13 +9,10 @@ import {
   getSurfaceColorStyle,
   getThemeColorCssValue,
   isDarkColor,
-  MaybeRTF,
   resolveComponentData,
   toPuckFields,
   useDocument,
   type ComprehensiveCTAValue,
-  type RichText,
-  type StyledTextValue,
   type ThemeColor,
   type TranslatableRichText,
   type TranslatableString,
@@ -36,17 +31,13 @@ import {
   type DayOfWeekNames,
   type HoursType,
 } from "@yext/pages-components";
-
-type StyledTextStyleProps = {
-  styles: StyledTextValue;
-  fontColor?: ThemeColor;
-};
-
-type StyledTextProps = {
-  text: YextEntityField<TranslatableString>;
-  styles: StyledTextValue;
-  fontColor?: ThemeColor;
-};
+import { formatPhoneNumber } from "@yext/visual-editor/section-library-support";
+import {
+  getTextStyles,
+  renderResolvedRichText,
+  type StyledTextProps,
+  type StyledTextStyleProps,
+} from "../shared/sectionHelpers";
 
 type PhoneItemProps = {
   number: YextEntityField<string>;
@@ -107,63 +98,6 @@ type NeighborhoodHealthLocationDetailsSectionProps = {
     contentStyles: StyledTextStyleProps;
   };
 };
-
-function getTextStyles(
-  styles: StyledTextValue,
-  fontColor?: ThemeColor,
-): React.CSSProperties {
-  return {
-    color: getThemeColorCssValue(fontColor),
-    fontFamily: styles.fontFamily === "default" ? undefined : styles.fontFamily,
-    fontSize: styles.fontSize === "default" ? undefined : styles.fontSize,
-    fontWeight: styles.fontWeight === "default" ? undefined : styles.fontWeight,
-    fontStyle: styles.fontStyle === "default" ? undefined : styles.fontStyle,
-    textTransform:
-      styles.textTransform === "default" ? undefined : styles.textTransform,
-  };
-}
-
-function renderResolvedRichText(
-  value: unknown,
-  richTextStyleOverrides: Omit<StyledTextValue, "color"> & { color: string },
-): React.ReactNode {
-  if (React.isValidElement(value)) {
-    return value;
-  }
-
-  const normalizedValue: RichText | string | undefined =
-    typeof value === "string"
-      ? value
-      : typeof value === "object" && value !== null && "html" in value
-        ? (value as RichText)
-        : undefined;
-
-  return (
-    <MaybeRTF
-      data={normalizedValue}
-      richTextStyleOverrides={richTextStyleOverrides}
-    />
-  );
-}
-
-function formatPhoneNumber(
-  phoneNumberString: string,
-  format: "domestic" | "international",
-): string {
-  const cleanedPhoneNumberString = phoneNumberString.replace(
-    /(?!^\+)\+|[^\d+]/g,
-    "",
-  );
-  const parsedPhoneNumber = parsePhoneNumber(cleanedPhoneNumberString);
-
-  if (!parsedPhoneNumber.valid || parsedPhoneNumber.number === undefined) {
-    return phoneNumberString;
-  }
-
-  return format === "international"
-    ? parsedPhoneNumber.number.international
-    : parsedPhoneNumber.number.national;
-}
 
 function normalizeResolvedStringList(value: unknown): string[] {
   return Array.isArray(value)
@@ -723,6 +657,11 @@ const NeighborhoodHealthLocationDetailsSectionComponent: PuckComponent<
     cards.backgroundColor,
     streamDocument,
   );
+  const cardBackgroundContext = {
+    selectedColor: cardSurfaceStyle?.backgroundColor ?? "white",
+    contrastingColor: cardSurfaceStyle?.color ?? "black",
+    isDarkColor: hasDarkCardBackground,
+  };
   const accessibilityRichTextStyleOverrides = {
     ...cards.contentStyles.styles,
     color: cardContentColor,
@@ -731,7 +670,6 @@ const NeighborhoodHealthLocationDetailsSectionComponent: PuckComponent<
     accessibilityText,
     locale,
     streamDocument,
-    { richTextStyleOverrides: accessibilityRichTextStyleOverrides },
   );
   const primaryCtaValue: Partial<ComprehensiveCTAValue> = {
     data: primaryCta.data,
@@ -783,7 +721,8 @@ h6, h6[class] { font-family: var(--fontFamily-h6-fontFamily); font-size: var(--f
                   {normalizedSectionHeading}
                 </h2>
               </EntityField>
-              <div className="mt-10 grid gap-5 xl:grid-cols-3">
+              <BackgroundProvider value={cardBackgroundContext}>
+                <div className="mt-10 grid gap-5 xl:grid-cols-3">
                 <article
                   className="flex h-full flex-col rounded-lg border border-current/15 px-6 py-7 shadow-sm"
                   style={cardSurfaceStyle}
@@ -907,19 +846,7 @@ h6, h6[class] { font-family: var(--fontFamily-h6-fontFamily); font-size: var(--f
                       </div>
                     ) : null}
                   </div>
-                  <BackgroundProvider
-                    value={{
-                      selectedColor:
-                        cardSurfaceStyle?.backgroundColor ?? "white",
-                      contrastingColor: cardSurfaceStyle?.color ?? "black",
-                      isDarkColor: isDarkColor({
-                        selectedColor:
-                          cardSurfaceStyle?.backgroundColor ?? "white",
-                        contrastingColor: cardSurfaceStyle?.color ?? "black",
-                      }),
-                    }}
-                  >
-                    <div className="mt-auto flex flex-wrap gap-3 pt-8">
+                  <div className="mt-auto flex flex-wrap gap-3 pt-8">
                       <EntityField
                         displayName="Primary Call to Action"
                         fieldId={primaryCta.data.cta.field}
@@ -962,8 +889,7 @@ h6, h6[class] { font-family: var(--fontFamily-h6-fontFamily); font-size: var(--f
                           value={secondaryCtaValue}
                         />
                       </EntityField>
-                    </div>
-                  </BackgroundProvider>
+                  </div>
                 </article>
 
                 <article
@@ -1111,7 +1037,8 @@ h6, h6[class] { font-family: var(--fontFamily-h6-fontFamily); font-size: var(--f
                     </div>
                   </div>
                 </article>
-              </div>
+                </div>
+              </BackgroundProvider>
             </div>
           </section>
         </Background>
@@ -1123,7 +1050,9 @@ h6, h6[class] { font-family: var(--fontFamily-h6-fontFamily); font-size: var(--f
 export const NeighborhoodHealthLocationDetailsSection: YextComponentConfig<NeighborhoodHealthLocationDetailsSectionProps> =
   {
     label: "Location Details Section",
-    fields: toPuckFields(neighborhoodHealthLocationDetailsFields),
+    fields: toPuckFields<NeighborhoodHealthLocationDetailsSectionProps>(
+      neighborhoodHealthLocationDetailsFields,
+    ),
     defaultProps: {
       cards: {
         titleStyles: {

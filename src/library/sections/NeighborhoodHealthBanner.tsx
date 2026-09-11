@@ -16,13 +16,18 @@ import {
   type YextComponentConfig,
   type YextEntityField,
   type YextFields,
-  backgroundColors,
   getDefaultRTF,
+  getSurfaceColorStyle,
+  getThemeColorCssValue,
   resolveComponentData,
   resolveYextEntityField,
   toPuckFields,
   useDocument,
 } from "@yext/visual-editor";
+import {
+  isRichTextEmpty,
+  type SectionProps,
+} from "../shared/sectionHelpers";
 
 type NeighborhoodHealthBannerProps = {
   data: {
@@ -33,27 +38,7 @@ type NeighborhoodHealthBannerProps = {
   styles: {
     textAlignment: "left" | "center" | "right";
   };
-  section: {
-    backgroundColor: ThemeColor;
-    visibleOnLivePage: boolean;
-  };
-};
-
-const isRichTextEmpty = (value: unknown): boolean => {
-  if (!value) {
-    return true;
-  }
-
-  if (typeof value === "string") {
-    return value.trim() === "";
-  }
-
-  if (typeof value === "object" && "html" in value) {
-    const html = (value as { html?: unknown }).html;
-    return typeof html !== "string" || html.trim() === "";
-  }
-
-  return false;
+  section: SectionProps;
 };
 
 const NeighborhoodHealthBannerFields: YextFields<NeighborhoodHealthBannerProps> =
@@ -123,6 +108,10 @@ const NeighborhoodHealthBannerComponent: PuckComponent<
   const streamDocument = useDocument();
   const isMappedField =
     !data.text.constantValueEnabled && Boolean(data.text.field);
+  const sectionStyle = getSurfaceColorStyle(
+    section.backgroundColor,
+    streamDocument,
+  );
 
   if (
     isMappedField &&
@@ -157,13 +146,15 @@ const NeighborhoodHealthBannerComponent: PuckComponent<
 
   const richTextStyleOverrides = {
     ...data.styles,
-    color: data.fontColor ?? section.backgroundColor.contrastingColor,
+    color:
+      getThemeColorCssValue(data.fontColor) ??
+      sectionStyle?.color ??
+      "currentColor",
   };
   const resolvedText = resolveComponentData(
     data.text,
     i18n.language,
     streamDocument,
-    { richTextStyleOverrides },
   );
 
   if (!resolvedText) {
@@ -206,7 +197,9 @@ const NeighborhoodHealthBannerComponent: PuckComponent<
 export const NeighborhoodHealthBanner: YextComponentConfig<NeighborhoodHealthBannerProps> =
   {
     label: "Banner",
-    fields: toPuckFields(NeighborhoodHealthBannerFields),
+    fields: toPuckFields<NeighborhoodHealthBannerProps>(
+      NeighborhoodHealthBannerFields,
+    ),
     defaultProps: {
       data: {
         text: {
@@ -228,7 +221,10 @@ export const NeighborhoodHealthBanner: YextComponentConfig<NeighborhoodHealthBan
         textAlignment: "center",
       },
       section: {
-        backgroundColor: backgroundColors.color1.value,
+        backgroundColor: {
+          selectedColor: "palette-primary",
+          contrastingColor: "palette-primary-contrast",
+        },
         visibleOnLivePage: true,
       },
     },

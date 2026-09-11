@@ -37,6 +37,10 @@ import {
   resolveComponentData,
   useDocument,
 } from "@yext/visual-editor";
+import {
+  aspectRatioOptions,
+  baseTypographyCss,
+} from "../shared/sectionHelpers";
 
 type SharedHeaderVariant =
   | "centerLogoSplitNav"
@@ -407,8 +411,8 @@ const NeighborhoodHealthHeaderFields: YextFields<NeighborhoodHealthHeaderProps> 
                 },
                 aspectRatio: {
                   label: "Aspect Ratio",
-                  type: "basicSelector",
-                  options: "ASPECT_RATIO",
+                  type: "select",
+                  options: aspectRatioOptions,
                 },
                 imageConstrain: {
                   label: "Image Constrain",
@@ -557,8 +561,8 @@ const NeighborhoodHealthHeaderFields: YextFields<NeighborhoodHealthHeaderProps> 
         },
         aspectRatio: {
           label: "Aspect Ratio",
-          type: "basicSelector",
-          options: "ASPECT_RATIO",
+          type: "select",
+          options: aspectRatioOptions,
         },
         imageConstrain: {
           label: "Image Constrain",
@@ -972,14 +976,7 @@ const NeighborhoodHealthHeaderComponent: PuckComponent<
       isEditing={props.puck.isEditing}
     >
       <style>{`
-p { font-family: var(--fontFamily-body-fontFamily); font-size: var(--fontSize-body-fontSize); line-height: 1.5; font-weight: var(--fontWeight-body-fontWeight); font-style: var(--fontStyle-body-fontStyle); text-transform: var(--textTransform-body-textTransform); }
-li { font-family: var(--fontFamily-body-fontFamily); font-size: var(--fontSize-body-fontSize); line-height: 1.5; font-weight: var(--fontWeight-body-fontWeight); font-style: var(--fontStyle-body-fontStyle); text-transform: var(--textTransform-body-textTransform); }
-h1, h1[class] { font-family: var(--fontFamily-h1-fontFamily); font-size: var(--fontSize-h1-fontSize); line-height: 1.2; font-weight: var(--fontWeight-h1-fontWeight); font-style: var(--fontStyle-h1-fontStyle); text-transform: var(--textTransform-h1-textTransform); }
-h2, h2[class] { font-family: var(--fontFamily-h2-fontFamily); font-size: var(--fontSize-h2-fontSize); line-height: 1.2; font-weight: var(--fontWeight-h2-fontWeight); font-style: var(--fontStyle-h2-fontStyle); text-transform: var(--textTransform-h2-textTransform); }
-h3, h3[class] { font-family: var(--fontFamily-h3-fontFamily); font-size: var(--fontSize-h3-fontSize); line-height: 1.2; font-weight: var(--fontWeight-h3-fontWeight); font-style: var(--fontStyle-h3-fontStyle); text-transform: var(--textTransform-h3-textTransform); }
-h4, h4[class] { font-family: var(--fontFamily-h4-fontFamily); font-size: var(--fontSize-h4-fontSize); line-height: 1.2; font-weight: var(--fontWeight-h4-fontWeight); font-style: var(--fontStyle-h4-fontStyle); text-transform: var(--textTransform-h4-textTransform); }
-h5, h5[class] { font-family: var(--fontFamily-h5-fontFamily); font-size: var(--fontSize-h5-fontSize); line-height: 1.2; font-weight: var(--fontWeight-h5-fontWeight); font-style: var(--fontStyle-h5-fontStyle); text-transform: var(--textTransform-h5-textTransform); }
-h6, h6[class] { font-family: var(--fontFamily-h6-fontFamily); font-size: var(--fontSize-h6-fontSize); line-height: 1.2; font-weight: var(--fontWeight-h6-fontWeight); font-style: var(--fontStyle-h6-fontStyle); text-transform: var(--textTransform-h6-textTransform); }
+${baseTypographyCss}
 
       `}</style>
       <Background

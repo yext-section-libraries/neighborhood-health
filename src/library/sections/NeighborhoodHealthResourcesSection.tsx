@@ -1,107 +1,42 @@
 import type { SectionConfig } from "@yext/visual-editor";
 
-import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
 import {
   Background,
   ComprehensiveCTA,
   EntityField,
   getAnalyticsScopeHash,
-  getThemeColorCssValue,
   getSurfaceColorStyle,
   isDarkColor,
   Image,
-  MaybeRTF,
   resolveComponentData,
   toPuckFields,
   useDocument,
   type ComprehensiveCTAValue,
-  type RichText,
-  type StyledImageValue,
-  type StyledTextValue,
-  ThemeOptions,
-  type ThemeColor,
-  type TranslatableAssetImage,
-  type TranslatableRichText,
-  type TranslatableString,
   type YextComponentConfig,
-  type YextEntityField,
   type YextFields,
   VisibilityWrapper,
 } from "@yext/visual-editor";
+import { AnalyticsScopeProvider } from "@yext/pages-components";
 import {
-  AnalyticsScopeProvider,
-  type ComplexImageType,
-  type ImageType,
-} from "@yext/pages-components";
-
-type StyledTextProps = {
-  text: YextEntityField<TranslatableString>;
-  styles: StyledTextValue;
-  fontColor?: ThemeColor;
-};
-
-type StyledRtfProps = {
-  text: YextEntityField<TranslatableRichText>;
-  styles: StyledTextValue;
-  fontColor?: ThemeColor;
-};
-
-type StyledImageProps = {
-  image: YextEntityField<ImageType | ComplexImageType | TranslatableAssetImage>;
-  aspectRatio: number;
-  imageConstrain: "fixed" | "filled";
-  styles?: StyledImageValue;
-};
+  aspectRatioOptions,
+  baseTypographyCss,
+  getRichTextStyleOverrides,
+  getTextStyles,
+  renderResolvedRichText,
+  type SectionProps,
+  type StyledImageProps,
+  type StyledRtfProps,
+  type StyledTextProps,
+} from "../shared/sectionHelpers";
 
 type NeighborhoodHealthResourcesSectionProps = {
   body: StyledRtfProps;
   cta: ComprehensiveCTAValue;
   heading: StyledTextProps;
   image: StyledImageProps;
-  section: {
-    backgroundColor: ThemeColor;
-    visibleOnLivePage: boolean;
-  };
+  section: SectionProps;
 };
-
-function getTextStyles(
-  styles: StyledTextValue,
-  fontColor?: ThemeColor,
-): React.CSSProperties {
-  return {
-    color: getThemeColorCssValue(fontColor),
-    fontFamily: styles.fontFamily === "default" ? undefined : styles.fontFamily,
-    fontSize: styles.fontSize === "default" ? undefined : styles.fontSize,
-    fontWeight: styles.fontWeight === "default" ? undefined : styles.fontWeight,
-    fontStyle: styles.fontStyle === "default" ? undefined : styles.fontStyle,
-    textTransform:
-      styles.textTransform === "default" ? undefined : styles.textTransform,
-  };
-}
-
-function renderResolvedRichText(
-  value: unknown,
-  richTextStyleOverrides: Omit<StyledTextValue, "color"> & { color: string },
-): React.ReactNode {
-  if (React.isValidElement(value)) {
-    return value;
-  }
-
-  const normalizedValue: RichText | string | undefined =
-    typeof value === "string"
-      ? value
-      : typeof value === "object" && value !== null && "html" in value
-        ? (value as RichText)
-        : undefined;
-
-  return (
-    <MaybeRTF
-      data={normalizedValue}
-      richTextStyleOverrides={richTextStyleOverrides}
-    />
-  );
-}
 
 const neighborhoodHealthResourcesFields: YextFields<NeighborhoodHealthResourcesSectionProps> =
   {
@@ -182,7 +117,7 @@ const neighborhoodHealthResourcesFields: YextFields<NeighborhoodHealthResourcesS
         aspectRatio: {
           label: "Aspect Ratio",
           type: "select",
-          options: ThemeOptions.ASPECT_RATIO,
+          options: aspectRatioOptions,
         },
         imageConstrain: {
           label: "Image Constrain",
@@ -223,17 +158,16 @@ const NeighborhoodHealthResourcesSectionComponent: PuckComponent<
     locale,
     streamDocument,
   );
-  const bodyRichTextStyleOverrides = {
-    ...body.styles,
-    color:
-      getThemeColorCssValue(body.fontColor) ??
-      (isDarkColor(section.backgroundColor, streamDocument) ? "#fff" : "#000"),
-  };
+  const bodyRichTextStyleOverrides = getRichTextStyleOverrides(
+    body.styles,
+    body.fontColor,
+    section.backgroundColor,
+    streamDocument,
+  );
   const resolvedBodyValue = resolveComponentData(
     body.text,
     locale,
     streamDocument,
-    { richTextStyleOverrides: bodyRichTextStyleOverrides },
   );
   const resolvedHeading =
     typeof resolvedHeadingValue === "string" ? resolvedHeadingValue : "";
@@ -280,14 +214,7 @@ const NeighborhoodHealthResourcesSectionComponent: PuckComponent<
       liveVisibility={section.visibleOnLivePage}
     >
       <style>{`
-p { font-family: var(--fontFamily-body-fontFamily); font-size: var(--fontSize-body-fontSize); line-height: 1.5; font-weight: var(--fontWeight-body-fontWeight); font-style: var(--fontStyle-body-fontStyle); text-transform: var(--textTransform-body-textTransform); }
-li { font-family: var(--fontFamily-body-fontFamily); font-size: var(--fontSize-body-fontSize); line-height: 1.5; font-weight: var(--fontWeight-body-fontWeight); font-style: var(--fontStyle-body-fontStyle); text-transform: var(--textTransform-body-textTransform); }
-h1, h1[class] { font-family: var(--fontFamily-h1-fontFamily); font-size: var(--fontSize-h1-fontSize); line-height: 1.2; font-weight: var(--fontWeight-h1-fontWeight); font-style: var(--fontStyle-h1-fontStyle); text-transform: var(--textTransform-h1-textTransform); }
-h2, h2[class] { font-family: var(--fontFamily-h2-fontFamily); font-size: var(--fontSize-h2-fontSize); line-height: 1.2; font-weight: var(--fontWeight-h2-fontWeight); font-style: var(--fontStyle-h2-fontStyle); text-transform: var(--textTransform-h2-textTransform); }
-h3, h3[class] { font-family: var(--fontFamily-h3-fontFamily); font-size: var(--fontSize-h3-fontSize); line-height: 1.2; font-weight: var(--fontWeight-h3-fontWeight); font-style: var(--fontStyle-h3-fontStyle); text-transform: var(--textTransform-h3-textTransform); }
-h4, h4[class] { font-family: var(--fontFamily-h4-fontFamily); font-size: var(--fontSize-h4-fontSize); line-height: 1.2; font-weight: var(--fontWeight-h4-fontWeight); font-style: var(--fontStyle-h4-fontStyle); text-transform: var(--textTransform-h4-textTransform); }
-h5, h5[class] { font-family: var(--fontFamily-h5-fontFamily); font-size: var(--fontSize-h5-fontSize); line-height: 1.2; font-weight: var(--fontWeight-h5-fontWeight); font-style: var(--fontStyle-h5-fontStyle); text-transform: var(--textTransform-h5-textTransform); }
-h6, h6[class] { font-family: var(--fontFamily-h6-fontFamily); font-size: var(--fontSize-h6-fontSize); line-height: 1.2; font-weight: var(--fontWeight-h6-fontWeight); font-style: var(--fontStyle-h6-fontStyle); text-transform: var(--textTransform-h6-textTransform); }
+${baseTypographyCss}
 
       `}</style>
       <AnalyticsScopeProvider name={scopeName}>
@@ -375,7 +302,9 @@ h6, h6[class] { font-family: var(--fontFamily-h6-fontFamily); font-size: var(--f
 export const NeighborhoodHealthResourcesSection: YextComponentConfig<NeighborhoodHealthResourcesSectionProps> =
   {
     label: "Resources Section",
-    fields: toPuckFields(neighborhoodHealthResourcesFields),
+    fields: toPuckFields<NeighborhoodHealthResourcesSectionProps>(
+      neighborhoodHealthResourcesFields,
+    ),
     defaultProps: {
       cta: {
         data: {
