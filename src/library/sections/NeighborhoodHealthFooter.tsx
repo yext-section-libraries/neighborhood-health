@@ -2,6 +2,7 @@ import type { SectionConfig } from "@yext/visual-editor";
 
 import type { PuckComponent } from "@puckeditor/core";
 import {
+  msg,
   Background,
   ComprehensiveCTA,
   EntityField,
@@ -81,48 +82,48 @@ function createDefaultComprehensiveCTA(label: string): ComprehensiveCTAValue {
 const neighborhoodHealthFooterFields: YextFields<NeighborhoodHealthFooterProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         visibleOnLivePage: {
-          label: "Visible On Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     brandLabel: {
-      label: "Brand Label",
+      label: msg("fields.brandLabel", "Brand Label"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: {
             types: ["type.string"],
           },
         },
         styles: {
-          label: "Text Styles",
+          label: msg("fields.textStyles", "Text Styles"),
           type: "styledText",
         },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     links: {
-      label: "Links",
+      label: msg("fields.links", "Links"),
       type: "array",
       defaultItemProps: {
         cta: createDefaultComprehensiveCTA("Link"),
@@ -131,7 +132,7 @@ const neighborhoodHealthFooterFields: YextFields<NeighborhoodHealthFooterProps> 
         String(item.cta?.data?.cta?.constantValue?.label || "Link"),
       arrayFields: {
         cta: {
-          label: "Call to Action",
+          label: msg("fields.callToAction", "Call to Action"),
           type: "comprehensiveCTA",
         },
       },
