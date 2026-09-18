@@ -2,6 +2,7 @@ import type { SectionConfig } from "@yext/visual-editor";
 
 import type { PuckComponent } from "@puckeditor/core";
 import {
+  msg,
   Background,
   ComprehensiveCTA,
   createItemSource,
@@ -70,21 +71,21 @@ type NeighborhoodHealthFeaturedServicesSectionProps = {
 };
 
 const serviceCardsSource = createItemSource<ServiceCardFields>({
-  label: "Service Cards",
+  label: msg("fields.serviceCards", "Service Cards"),
   mappingFields: {
     title: {
       type: "entityField",
-      label: "Title",
+      label: msg("fields.title", "Title"),
       filter: { types: ["type.string"] },
     },
     description: {
       type: "entityField",
-      label: "Description",
+      label: msg("fields.description", "Description"),
       filter: { types: ["type.rich_text_v2"] },
     },
     image: {
       type: "entityField",
-      label: "Image",
+      label: msg("fields.image", "Image"),
       filter: { types: ["type.image"] },
     },
   },
@@ -195,41 +196,41 @@ const serviceCardsSource = createItemSource<ServiceCardFields>({
 const neighborhoodHealthFeaturedServicesFields: YextFields<NeighborhoodHealthFeaturedServicesSectionProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
       },
     },
     heading: {
-      label: "Heading",
+      label: msg("fields.heading", "Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: {
             types: ["type.string"],
           },
         },
         styles: {
-          label: "Text Styles",
+          label: msg("fields.textStyles", "Text Styles"),
           type: "styledText",
         },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
@@ -237,11 +238,11 @@ const neighborhoodHealthFeaturedServicesFields: YextFields<NeighborhoodHealthFea
     },
     cards: serviceCardsSource.field,
     cardCtas: {
-      label: "Card Call to Actions",
+      label: msg("fields.cardCallToActions", "Card Call to Actions"),
       type: "array",
       arrayFields: {
         cta: {
-          label: "Call to Action",
+          label: msg("fields.callToAction", "Call to Action"),
           type: "comprehensiveCTA",
         },
       },
@@ -252,58 +253,58 @@ const neighborhoodHealthFeaturedServicesFields: YextFields<NeighborhoodHealthFea
         `Card Call to Action ${(index ?? 0) + 1}`,
     },
     cardStyles: {
-      label: "Card Styles",
+      label: msg("fields.cardStyles", "Card Styles"),
       type: "object",
       objectFields: {
         title: {
-          label: "Title Styles",
+          label: msg("fields.titleStyles", "Title Styles"),
           type: "object",
           objectFields: {
             styles: {
-              label: "Text Styles",
+              label: msg("fields.textStyles", "Text Styles"),
               type: "styledText",
             },
             fontColor: {
-              label: "Font Color",
+              label: msg("fields.fontColor", "Font Color"),
               type: "basicSelector",
               options: "SITE_COLOR",
             },
           },
         },
         description: {
-          label: "Description Styles",
+          label: msg("fields.descriptionStyles", "Description Styles"),
           type: "object",
           objectFields: {
             styles: {
-              label: "Text Styles",
+              label: msg("fields.textStyles", "Text Styles"),
               type: "styledText",
             },
             fontColor: {
-              label: "Font Color",
+              label: msg("fields.fontColor", "Font Color"),
               type: "basicSelector",
               options: "SITE_COLOR",
             },
           },
         },
         image: {
-          label: "Image Styles",
+          label: msg("fields.imageStyles", "Image Styles"),
           type: "object",
           objectFields: {
             aspectRatio: {
-              label: "Aspect Ratio",
+              label: msg("fields.aspectRatio", "Aspect Ratio"),
               type: "select",
               options: aspectRatioOptions,
             },
             imageConstrain: {
-              label: "Image Constrain",
+              label: msg("fields.imageConstrain", "Image Constrain"),
               type: "select",
               options: [
-                { label: "Fixed", value: "fixed" },
-                { label: "Filled", value: "filled" },
+                { label: msg("fields.options.fixed", "Fixed"), value: "fixed" },
+                { label: msg("fields.options.filled", "Filled"), value: "filled" },
               ],
             },
             styles: {
-              label: "Image Styles",
+              label: msg("fields.imageStyles", "Image Styles"),
               type: "styledImage",
             },
           },
@@ -311,7 +312,7 @@ const neighborhoodHealthFeaturedServicesFields: YextFields<NeighborhoodHealthFea
       },
     },
     sectionCta: {
-      label: "Section CTA",
+      label: msg("fields.sectionCta", "Section CTA"),
       type: "comprehensiveCTA",
     },
   };

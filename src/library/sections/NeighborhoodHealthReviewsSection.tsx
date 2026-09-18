@@ -1,7 +1,9 @@
 import type { SectionConfig } from "@yext/visual-editor";
 
 import type { PuckComponent } from "@puckeditor/core";
+import { useTranslation } from "react-i18next";
 import {
+  msg,
   Background,
   EntityField,
   getAggregateRating,
@@ -14,6 +16,7 @@ import {
   type YextComponentConfig,
   type YextFields,
   VisibilityWrapper,
+  pt,
 } from "@yext/visual-editor";
 import { AnalyticsScopeProvider } from "@yext/pages-components";
 import {
@@ -91,105 +94,105 @@ function formatReviewDate(
 const neighborhoodHealthReviewsFields: YextFields<NeighborhoodHealthReviewsSectionProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         visibleOnLivePage: {
-          label: "Visible On Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
       },
     },
     heading: {
-      label: "Heading",
+      label: msg("fields.heading", "Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: {
             types: ["type.string"],
           },
         },
         styles: {
-          label: "Text Styles",
+          label: msg("fields.textStyles", "Text Styles"),
           type: "styledText",
         },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     cardStyles: {
-      label: "Review Card Styles",
+      label: msg("fields.reviewCardStyles", "Review Card Styles"),
       type: "object",
       objectFields: {
         reviewName: {
-          label: "Review Name",
+          label: msg("fields.reviewName", "Review Name"),
           type: "object",
           objectFields: {
             styles: {
-              label: "Text Styles",
+              label: msg("fields.textStyles", "Text Styles"),
               type: "styledText",
             },
             fontColor: {
-              label: "Font Color",
+              label: msg("fields.fontColor", "Font Color"),
               type: "basicSelector",
               options: "SITE_COLOR",
             },
           },
         },
         date: {
-          label: "Date",
+          label: msg("fields.date", "Date"),
           type: "object",
           objectFields: {
             styles: {
-              label: "Text Styles",
+              label: msg("fields.textStyles", "Text Styles"),
               type: "styledText",
             },
             fontColor: {
-              label: "Font Color",
+              label: msg("fields.fontColor", "Font Color"),
               type: "basicSelector",
               options: "SITE_COLOR",
             },
           },
         },
         stars: {
-          label: "Stars",
+          label: msg("fields.stars", "Stars"),
           type: "object",
           objectFields: {
             styles: {
-              label: "Text Styles",
+              label: msg("fields.textStyles", "Text Styles"),
               type: "styledText",
             },
             fontColor: {
-              label: "Font Color",
+              label: msg("fields.fontColor", "Font Color"),
               type: "basicSelector",
               options: "SITE_COLOR",
             },
           },
         },
         body: {
-          label: "Body",
+          label: msg("fields.body", "Body"),
           type: "object",
           objectFields: {
             styles: {
-              label: "Text Styles",
+              label: msg("fields.textStyles", "Text Styles"),
               type: "styledText",
             },
             fontColor: {
-              label: "Font Color",
+              label: msg("fields.fontColor", "Font Color"),
               type: "basicSelector",
               options: "SITE_COLOR",
             },
@@ -198,11 +201,11 @@ const neighborhoodHealthReviewsFields: YextFields<NeighborhoodHealthReviewsSecti
       },
     },
     showDates: {
-      label: "Show Dates",
+      label: msg("fields.showDates", "Show Dates"),
       type: "radio",
       options: [
-        { label: "Yes", value: true },
-        { label: "No", value: false },
+        { label: msg("fields.options.yes", "Yes"), value: true },
+        { label: msg("fields.options.no", "No"), value: false },
       ],
     },
   };
@@ -218,7 +221,8 @@ const NeighborhoodHealthReviewsSectionComponent: PuckComponent<
   NeighborhoodHealthReviewsSectionProps
 > = ({ cardStyles, heading, id, puck, section, showDates }) => {
   const streamDocument = useDocument<StreamDocumentWithReviews>();
-  const locale = streamDocument.locale ?? "en";
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language;
   const scopeName = `YextNeighborhoodHealthReviewsSection${getAnalyticsScopeHash(id)}`;
   const resolvedHeadingValue = resolveComponentData(
     heading.text,
@@ -300,7 +304,11 @@ ${baseTypographyCss}
               <div className="mt-6 flex flex-col items-center gap-3 text-center">
                 <div
                   className="flex justify-center gap-1 text-sm"
-                  aria-label={`${averageRating.toFixed(1)} out of 5 stars`}
+                  aria-label={t(
+                    "ratingOutOfFiveStars",
+                    "{{rating}} out of 5 stars",
+                    { rating: averageRating.toFixed(1) },
+                  )}
                   style={starsStyle}
                 >
                   {Array.from({
@@ -313,8 +321,14 @@ ${baseTypographyCss}
                   className="text-sm uppercase tracking-[0.18em] opacity-70"
                   style={starsStyle}
                 >
-                  {formatRating(averageRating)}/5 average rating from{" "}
-                  {reviewCount} {reviewCount === 1 ? "review" : "reviews"}
+                  {t(
+                    "averageRatingSummary",
+                    "{{rating}}/5 average rating from {{count}} review",
+                    {
+                      count: reviewCount,
+                      rating: formatRating(averageRating),
+                    },
+                  )}
                 </p>
               </div>
               <div className="mt-10 grid gap-10 md:grid-cols-2">
@@ -358,7 +372,9 @@ ${baseTypographyCss}
                             className="mt-2 text-xs uppercase tracking-[0.18em] opacity-70"
                             style={starsStyle}
                           >
-                            {formatRating(review.rating)}/5 stars
+                            {t("ratingStars", "{{rating}}/5 stars", {
+                              rating: formatRating(review.rating),
+                            })}
                           </p>
                         </div>
                       ) : null}
@@ -391,7 +407,7 @@ ${baseTypographyCss}
                       {businessResponse?.content ? (
                         <div className="mt-6 border-t border-current pt-5 text-left">
                           <p className="text-xs uppercase tracking-[0.18em] opacity-70">
-                            Business response
+                            {t("businessResponse", "Business response")}
                           </p>
                           <p
                             className="mt-3 text-sm leading-7 opacity-70"
@@ -437,8 +453,10 @@ ${baseTypographyCss}
                 </h2>
               </EntityField>
               <div className="mt-10 rounded border border-dashed border-current px-6 py-8 text-center text-sm opacity-70">
-                First-party reviews will appear here when the current entity has
-                review data.
+                {pt(
+                  "reviewsPlaceholder",
+                  "First-party reviews will appear here when the current entity has review data.",
+                )}
               </div>
             </div>
           </Background>
@@ -519,9 +537,7 @@ export const NeighborhoodHealthReviewsSection: YextComponentConfig<NeighborhoodH
         },
       },
     },
-    render: (props) => (
-      <NeighborhoodHealthReviewsSectionComponent {...props} />
-    ),
+    render: (props) => <NeighborhoodHealthReviewsSectionComponent {...props} />,
   };
 
 export const config: SectionConfig = {

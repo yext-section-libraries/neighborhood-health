@@ -1,7 +1,9 @@
 import type { SectionConfig } from "@yext/visual-editor";
 
 import type { PuckComponent } from "@puckeditor/core";
+import { useTranslation } from "react-i18next";
 import {
+  msg,
   Background,
   ComprehensiveCTA,
   EntityField,
@@ -58,150 +60,150 @@ type NeighborhoodHealthHeroSectionProps = {
 const neighborhoodHealthHeroFields: YextFields<NeighborhoodHealthHeroSectionProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         visibleOnLivePage: {
-          label: "Visible On Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     heading: {
-      label: "Heading",
+      label: msg("fields.heading", "Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: {
             types: ["type.string"],
           },
         },
         styles: {
-          label: "Text Styles",
+          label: msg("fields.textStyles", "Text Styles"),
           type: "styledText",
         },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     body: {
-      label: "Body",
+      label: msg("fields.body", "Body"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: {
             types: ["type.rich_text_v2"],
           },
         },
         styles: {
-          label: "Text Styles",
+          label: msg("fields.textStyles", "Text Styles"),
           type: "styledText",
         },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     heroImage: {
-      label: "Hero Image",
+      label: msg("fields.heroImage", "Hero Image"),
       type: "object",
       objectFields: {
         image: {
           type: "entityField",
-          label: "Image",
+          label: msg("fields.image", "Image"),
           filter: {
             types: ["type.image"],
           },
         },
         aspectRatio: {
-          label: "Aspect Ratio",
+          label: msg("fields.aspectRatio", "Aspect Ratio"),
           type: "select",
           options: aspectRatioOptions,
         },
         imageConstrain: {
-          label: "Image Constrain",
+          label: msg("fields.imageConstrain", "Image Constrain"),
           type: "select",
           options: [
-            { label: "Fixed", value: "fixed" },
-            { label: "Filled", value: "filled" },
+            { label: msg("fields.options.fixed", "Fixed"), value: "fixed" },
+            { label: msg("fields.options.filled", "Filled"), value: "filled" },
           ],
         },
         styles: {
-          label: "Image Styles",
+          label: msg("fields.imageStyles", "Image Styles"),
           type: "styledImage",
         },
       },
     },
     hours: {
       type: "entityField",
-      label: "Hours",
+      label: msg("fields.hours", "Hours"),
       filter: {
         types: ["type.hours"],
       },
       disableConstantValueToggle: true,
     },
     hoursStyles: {
-      label: "Hours Styles",
+      label: msg("fields.hoursStyles", "Hours Styles"),
       type: "object",
       objectFields: {
         showCurrentStatus: {
-          label: "Show Current Status",
+          label: msg("fields.showCurrentStatus", "Show Current Status"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
         timeFormat: {
-          label: "Time Format",
+          label: msg("fields.timeFormat", "Time Format"),
           type: "select",
           options: [
-            { label: "12 Hour", value: "12h" },
-            { label: "24 Hour", value: "24h" },
+            { label: msg("fields.options.hour12Label", "12 Hour"), value: "12h" },
+            { label: msg("fields.options.hour24Label", "24 Hour"), value: "24h" },
           ],
         },
         dayOfWeekFormat: {
-          label: "Day Of Week Format",
+          label: msg("fields.dayOfWeekFormatLabel", "Day Of Week Format"),
           type: "select",
           options: [
-            { label: "Short", value: "short" },
-            { label: "Long", value: "long" },
+            { label: msg("fields.options.short", "Short"), value: "short" },
+            { label: msg("fields.options.long", "Long"), value: "long" },
           ],
         },
         showDayNames: {
-          label: "Show Day Names",
+          label: msg("fields.showDayNames", "Show Day Names"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     primaryCta: {
-      label: "Primary CTA",
+      label: msg("fields.primaryCTA", "Primary CTA"),
       type: "comprehensiveCTA",
     },
     secondaryCta: {
-      label: "Secondary CTA",
+      label: msg("fields.secondaryCTA", "Secondary CTA"),
       type: "comprehensiveCTA",
     },
   };
@@ -229,7 +231,8 @@ const NeighborhoodHealthHeroSectionComponent: PuckComponent<
   section,
 }) => {
   const streamDocument = useDocument();
-  const locale = streamDocument.locale ?? "en";
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language;
   const scopeName = `YextNeighborhoodHealthHeroSection${getAnalyticsScopeHash(id)}`;
   const resolvedHeadingValue = resolveComponentData(
     heading.text,
@@ -291,6 +294,10 @@ const NeighborhoodHealthHeroSectionComponent: PuckComponent<
   const dayOptions = { weekday: hoursStyles.dayOfWeekFormat } as const;
 
   const renderHoursStatus = (params: StatusParams): React.ReactNode => {
+    const isComingSoon = !!params.comingSoon;
+    const isOpen24Hours = !!params.currentInterval?.is24h?.();
+    const isTemporarilyClosed = !params.futureInterval;
+    const hasFutureStatus = !isOpen24Hours && !isTemporarilyClosed;
     const interval = params.isOpen
       ? params.currentInterval
       : params.futureInterval;
@@ -302,6 +309,33 @@ const NeighborhoodHealthHeroSectionComponent: PuckComponent<
         ? interval?.end?.setLocale(locale).toLocaleString(params.dayOptions)
         : interval?.start?.setLocale(locale).toLocaleString(params.dayOptions)
       : "";
+    const currentStatus = isComingSoon
+      ? t("comingSoon", "Coming Soon")
+      : isOpen24Hours
+        ? t("open24Hours", "Open 24 Hours")
+        : isTemporarilyClosed
+          ? t("temporarilyClosed", "Temporarily Closed")
+          : params.isOpen
+            ? t("openNow", "Open Now")
+            : t("closed", "Closed");
+    const futureStatus =
+      hasFutureStatus && time
+        ? params.isOpen
+          ? dayOfWeek
+            ? t(
+                "closesAtTimeWeek",
+                "Closes at {{time}} {{dayOfWeek}}",
+                { time, dayOfWeek },
+              )
+            : t("closesAtTime", "Closes at {{time}}", { time })
+          : dayOfWeek
+            ? t(
+                "opensAtTimeWeek",
+                "Opens at {{time}} {{dayOfWeek}}",
+                { time, dayOfWeek },
+              )
+            : t("opensAtTime", "Opens at {{time}}", { time })
+        : "";
 
     return (
       <div className="flex items-center gap-1 text-sm font-semibold">
@@ -315,13 +349,9 @@ const NeighborhoodHealthHeroSectionComponent: PuckComponent<
               : "0 0 0 0.22rem rgba(244 67 54 / 0.18)",
           }}
         />
-        <span>{params.isOpen ? "Open Now:" : "Closed:"}</span>
-        {time ? (
-          <span>
-            {params.isOpen ? `Closes at ${time}` : `Opens at ${time}`}
-          </span>
-        ) : null}
-        {dayOfWeek ? <span>{dayOfWeek}</span> : null}
+        <span>{currentStatus}</span>
+        {futureStatus ? <span aria-hidden="true">•</span> : null}
+        {futureStatus ? <span>{futureStatus}</span> : null}
       </div>
     );
   };
