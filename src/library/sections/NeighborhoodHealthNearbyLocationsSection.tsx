@@ -35,7 +35,6 @@ import { formatPhoneNumber } from "@yext/visual-editor/section-library-support";
 import type { CSSProperties } from "react";
 import { useTranslation } from "react-i18next";
 import {
-  baseTypographyCss,
   getTextStyles,
   type SectionProps,
   type StyledTextProps,
@@ -383,31 +382,28 @@ const NeighborhoodHealthNearbyLocationsSectionComponent: PuckComponent<
         isEditing={puck.isEditing}
         liveVisibility={section.visibleOnLivePage}
       >
-        <style>{`
-${baseTypographyCss}
 
-        `}</style>
         <AnalyticsScopeProvider name={scopeName}>
           <Background
             as="section"
             background={section.backgroundColor}
-            className="px-6 py-16 md:px-8 lg:px-10"
+            className="px-4 py-pageSection-verticalPadding sm:px-6"
             style={sectionSurfaceStyle}
           >
-            <div className="mx-auto max-w-[1600px]">
+            <div className="mx-auto max-w-pageSection-contentWidth">
               <EntityField
                 displayName="Heading"
                 fieldId={heading.text.field}
                 constantValueEnabled={heading.text.constantValueEnabled}
               >
                 <h2
-                  className="text-center tracking-[-0.04em]"
+                  className="text-center"
                   style={headingStyle}
                 >
                   {resolvedHeading}
                 </h2>
               </EntityField>
-              <p className="mt-10 text-center text-sm opacity-60 md:text-base">
+              <p className="mt-10 text-center opacity-60">
                 {nearbyLocationsStatus === "pending"
                   ? t("loadingNearbyLocations", "Loading nearby locations")
                   : t(
@@ -427,15 +423,12 @@ ${baseTypographyCss}
       isEditing={puck.isEditing}
       liveVisibility={section.visibleOnLivePage}
     >
-      <style>{`
-${baseTypographyCss}
 
-      `}</style>
       <AnalyticsScopeProvider name={scopeName}>
         <Background
           as="section"
           background={section.backgroundColor}
-          className="px-6 py-16 md:px-8 lg:px-10"
+          className="px-4 py-pageSection-verticalPadding sm:px-6"
           style={sectionSurfaceStyle}
         >
           <style>{`
@@ -451,20 +444,20 @@ ${baseTypographyCss}
               object-position: center;
             }
           `}</style>
-          <div className="mx-auto max-w-[1600px]">
+          <div className="mx-auto max-w-pageSection-contentWidth">
             <EntityField
               displayName="Heading"
               fieldId={heading.text.field}
               constantValueEnabled={heading.text.constantValueEnabled}
             >
               <h2
-                className="text-center tracking-[-0.04em]"
+                className="text-center"
                 style={headingStyle}
               >
                 {resolvedHeading}
               </h2>
             </EntityField>
-            <div className="yext-neighborhood-health-nearby-map relative mt-10 overflow-hidden rounded-lg border border-current/15 bg-white">
+            <div className="yext-neighborhood-health-nearby-map relative mt-10 overflow-hidden border border-current/15 bg-white">
               <EntityField
                 displayName="Map Location"
                 fieldId={map.coordinate.field}
@@ -494,7 +487,7 @@ ${baseTypographyCss}
                 ) => (
                   <article key={key} className="space-y-3">
                     <h3
-                      className="leading-none tracking-[-0.04em]"
+                      className=""
                       style={cardTitleStyle}
                     >
                       {resolvedUrl ? (
@@ -559,7 +552,7 @@ ${baseTypographyCss}
 
 export const NeighborhoodHealthNearbyLocationsSection: YextComponentConfig<NeighborhoodHealthNearbyLocationsSectionProps> =
   {
-    label: "Nearby Locations Section",
+    label: msg("components.nearbyLocations", "Nearby Locations"),
     fields: toPuckFields<NeighborhoodHealthNearbyLocationsSectionProps>(
       neighborhoodHealthNearbyLocationsFields,
     ),
@@ -642,7 +635,7 @@ export const NeighborhoodHealthNearbyLocationsSection: YextComponentConfig<Neigh
 
 export const config: SectionConfig = {
   id: "NeighborhoodHealthNearbyLocationsSection",
-  displayName: "Nearby Locations Section",
-  description: "Nearby Locations Section",
+  displayName: "Nearby Locations",
+  description: "Nearby Locations",
   pageSetTypes: ["ENTITY"],
 };

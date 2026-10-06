@@ -21,7 +21,6 @@ import {
 import { AnalyticsScopeProvider } from "@yext/pages-components";
 import {
   aspectRatioOptions,
-  baseTypographyCss,
   getRichTextStyleOverrides,
   getTextStyles,
   renderResolvedRichText,
@@ -211,25 +210,24 @@ const NeighborhoodHealthAboutSectionComponent: PuckComponent<
       liveVisibility={section.visibleOnLivePage}
     >
       <style>{`
-${baseTypographyCss}
 .yext-neighborhood-health-about-body p + p { margin-top: 1rem; }
 
       `}</style>
       <AnalyticsScopeProvider name={scopeName}>
         <Background background={section.backgroundColor}>
           <section
-            className="px-6 py-16 md:px-8 lg:px-10"
+            className="px-4 py-pageSection-verticalPadding sm:px-6"
             style={sectionSurfaceStyle}
           >
-            <div className="mx-auto grid max-w-[1600px] items-center gap-10 md:grid-cols-2 md:gap-12 lg:gap-16">
-              <div className="order-1 rounded-lg bg-white/8 p-4 md:p-6">
+            <div className="mx-auto grid max-w-pageSection-contentWidth items-center gap-10 md:grid-cols-2 md:gap-12 lg:gap-16">
+              <div className="order-1 bg-white/8 p-4 md:p-6">
                 {resolvedImage ? (
                   <EntityField
                     displayName="Image"
                     fieldId={image.image.field}
                     constantValueEnabled={image.image.constantValueEnabled}
                   >
-                    <div style={imageWrapperStyle}>
+                    <div className="rounded-image-borderRadius overflow-hidden" style={imageWrapperStyle}>
                       <Image
                         className="h-full"
                         image={resolvedImage}
@@ -246,7 +244,7 @@ ${baseTypographyCss}
                   constantValueEnabled={heading.text.constantValueEnabled}
                 >
                   <h2
-                    className="font-serif text-4xl tracking-[-0.04em] md:text-5xl"
+                    className=""
                     style={getTextStyles(
                       heading.styles,
                       heading.fontColor,
@@ -262,14 +260,14 @@ ${baseTypographyCss}
                   fieldId={body.text.field}
                   constantValueEnabled={body.text.constantValueEnabled}
                 >
-                  <div className="yext-neighborhood-health-about-body mx-auto mt-5 max-w-[52ch] text-sm leading-7 md:text-base">
+                  <div className="yext-neighborhood-health-about-body mx-auto mt-5 max-w-[52ch]">
                     {renderResolvedRichText(
                       resolvedBody,
                       bodyRichTextStyleOverrides,
                     )}
                   </div>
                 </EntityField>
-                <div aria-hidden="true" className="mt-5 text-xl leading-none">
+                <div aria-hidden="true" className="mt-5">
                   ✦
                 </div>
                 <div className="mt-8 flex justify-center">
@@ -304,7 +302,7 @@ ${baseTypographyCss}
 
 export const NeighborhoodHealthAboutSection: YextComponentConfig<NeighborhoodHealthAboutSectionProps> =
   {
-    label: "About Section",
+    label: msg("components.about", "About"),
     fields: toPuckFields<NeighborhoodHealthAboutSectionProps>(
       neighborhoodHealthAboutFields,
     ),
@@ -358,7 +356,7 @@ export const NeighborhoodHealthAboutSection: YextComponentConfig<NeighborhoodHea
             fontStyle: "default",
             fontFamily: "default",
             fontWeight: "default",
-            borderRadius: "lg",
+            borderRadius: "default",
             letterSpacing: "default",
             textTransform: "default",
           },
@@ -372,7 +370,7 @@ export const NeighborhoodHealthAboutSection: YextComponentConfig<NeighborhoodHea
           constantValue: {
             hasLocalizedValue: "true",
             defaultValue: {
-              html: '<p dir="ltr" style="font-size: 14.67px; font-weight: 400; line-height: 18.67px; color: rgb(0, 0, 0); margin: 0; padding: 3px 2px 3px 2px; position: relative;"><span>[[name]] - [[geomodifier]] is [[address.city]]&#39;s premier destination for integrated medical services. Located conveniently at [[address.line1]], we bridge the gap between a standard doctor&#39;s office and a hospital emergency room. </span><br/><br/><span>Our facility is designed for efficiency and patient comfort. By housing advanced imaging, a high-complexity lab, and a diverse team of specialists under one roof, we ensure that diagnosis and treatment happen in hours, not days. We are committed to reducing ER wait times and providing the Denver community with a higher standard of local healthcare.</span></p>',
+              html: '<p dir="ltr" ><span>[[name]] - [[geomodifier]] is [[address.city]]&#39;s premier destination for integrated medical services. Located conveniently at [[address.line1]], we bridge the gap between a standard doctor&#39;s office and a hospital emergency room. </span><br/><br/><span>Our facility is designed for efficiency and patient comfort. By housing advanced imaging, a high-complexity lab, and a diverse team of specialists under one roof, we ensure that diagnosis and treatment happen in hours, not days. We are committed to reducing ER wait times and providing the Denver community with a higher standard of local healthcare.</span></p>',
               json: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"[[name]] - [[geomodifier]] is [[address.city]]\'s premier destination for integrated medical services. Located conveniently at [[address.line1]], we bridge the gap between a standard doctor\'s office and a hospital emergency room. ","type":"text","version":1},{"type":"linebreak","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"Our facility is designed for efficiency and patient comfort. By housing advanced imaging, a high-complexity lab, and a diverse team of specialists under one roof, we ensure that diagnosis and treatment happen in hours, not days. We are committed to reducing ER wait times and providing the Denver community with a higher standard of local healthcare.","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}',
             },
           },
@@ -434,7 +432,7 @@ export const NeighborhoodHealthAboutSection: YextComponentConfig<NeighborhoodHea
 
 export const config: SectionConfig = {
   id: "NeighborhoodHealthAboutSection",
-  displayName: "About Section",
-  description: "About Section",
+  displayName: "About",
+  description: "About",
   pageSetTypes: ["ENTITY"],
 };

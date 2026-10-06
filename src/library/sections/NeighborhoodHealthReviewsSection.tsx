@@ -20,7 +20,6 @@ import {
 } from "@yext/visual-editor";
 import { AnalyticsScopeProvider } from "@yext/pages-components";
 import {
-  baseTypographyCss,
   getTextStyles,
   type SectionProps,
   type StyledTextProps,
@@ -276,26 +275,23 @@ const NeighborhoodHealthReviewsSectionComponent: PuckComponent<
       isEditing={puck.isEditing}
       liveVisibility={section.visibleOnLivePage}
     >
-      <style>{`
-${baseTypographyCss}
 
-      `}</style>
       <AnalyticsScopeProvider name={scopeName}>
         {reviews.length ? (
           <Background
             as="section"
             background={section.backgroundColor}
-            className="px-6 py-16 md:px-8 lg:px-10"
+            className="px-4 py-pageSection-verticalPadding sm:px-6"
             style={sectionSurfaceStyle}
           >
-            <div className="mx-auto max-w-[1320px]">
+            <div className="mx-auto max-w-pageSection-contentWidth">
               <EntityField
                 displayName="Heading"
                 fieldId={heading.text.field}
                 constantValueEnabled={heading.text.constantValueEnabled}
               >
                 <h2
-                  className="text-center tracking-[-0.04em]"
+                  className="text-center"
                   style={headingStyle}
                 >
                   {resolvedHeading}
@@ -303,7 +299,7 @@ ${baseTypographyCss}
               </EntityField>
               <div className="mt-6 flex flex-col items-center gap-3 text-center">
                 <div
-                  className="flex justify-center gap-1 text-sm"
+                  className="flex justify-center gap-1"
                   aria-label={t(
                     "ratingOutOfFiveStars",
                     "{{rating}} out of 5 stars",
@@ -318,7 +314,7 @@ ${baseTypographyCss}
                   ))}
                 </div>
                 <p
-                  className="text-sm uppercase tracking-[0.18em] opacity-70"
+                  className="uppercase opacity-70"
                   style={starsStyle}
                 >
                   {t(
@@ -356,7 +352,7 @@ ${baseTypographyCss}
                       review.rating > 0 ? (
                         <div>
                           <div
-                            className="flex justify-center gap-1 text-sm"
+                            className="flex justify-center gap-1"
                             style={starsStyle}
                           >
                             {Array.from({
@@ -369,7 +365,7 @@ ${baseTypographyCss}
                             ))}
                           </div>
                           <p
-                            className="mt-2 text-xs uppercase tracking-[0.18em] opacity-70"
+                            className="mt-2 uppercase opacity-70"
                             style={starsStyle}
                           >
                             {t("ratingStars", "{{rating}}/5 stars", {
@@ -379,7 +375,7 @@ ${baseTypographyCss}
                         </div>
                       ) : null}
                       {review.content ? (
-                        <blockquote className="mt-5 text-sm leading-7 opacity-70 md:text-base">
+                        <blockquote className="mt-5 opacity-70">
                           <p style={bodyStyle}>
                             &ldquo;{review.content}&rdquo;
                           </p>
@@ -388,7 +384,7 @@ ${baseTypographyCss}
                       <footer className="mt-5">
                         {review.authorName ? (
                           <div
-                            className="font-serif text-lg"
+                            className=""
                             style={reviewNameStyle}
                           >
                             {review.authorName}
@@ -396,7 +392,7 @@ ${baseTypographyCss}
                         ) : null}
                         {showDates && reviewDate ? (
                           <time
-                            className="mt-2 block text-xs uppercase tracking-[0.18em] opacity-70"
+                            className="mt-2 block uppercase opacity-70"
                             dateTime={review.reviewDate}
                             style={dateStyle}
                           >
@@ -406,18 +402,18 @@ ${baseTypographyCss}
                       </footer>
                       {businessResponse?.content ? (
                         <div className="mt-6 border-t border-current pt-5 text-left">
-                          <p className="text-xs uppercase tracking-[0.18em] opacity-70">
+                          <p className="uppercase opacity-70">
                             {t("businessResponse", "Business response")}
                           </p>
                           <p
-                            className="mt-3 text-sm leading-7 opacity-70"
+                            className="mt-3 opacity-70"
                             style={bodyStyle}
                           >
                             {businessResponse.content}
                           </p>
                           {showDates && businessResponseDate ? (
                             <time
-                              className="mt-3 block text-xs uppercase tracking-[0.18em] opacity-70"
+                              className="mt-3 block uppercase opacity-70"
                               dateTime={businessResponse.commentDate}
                               style={dateStyle}
                             >
@@ -436,23 +432,23 @@ ${baseTypographyCss}
           <Background
             as="section"
             background={section.backgroundColor}
-            className="px-6 py-16 md:px-8 lg:px-10"
+            className="px-4 py-pageSection-verticalPadding sm:px-6"
             style={sectionSurfaceStyle}
           >
-            <div className="mx-auto max-w-[1320px]">
+            <div className="mx-auto max-w-pageSection-contentWidth">
               <EntityField
                 displayName="Heading"
                 fieldId={heading.text.field}
                 constantValueEnabled={heading.text.constantValueEnabled}
               >
                 <h2
-                  className="text-center tracking-[-0.04em]"
+                  className="text-center"
                   style={headingStyle}
                 >
                   {resolvedHeading}
                 </h2>
               </EntityField>
-              <div className="mt-10 rounded border border-dashed border-current px-6 py-8 text-center text-sm opacity-70">
+              <div className="mt-10 rounded border border-dashed border-current px-6 py-8 text-center opacity-70">
                 {pt(
                   "reviewsPlaceholder",
                   "First-party reviews will appear here when the current entity has review data.",
@@ -468,7 +464,7 @@ ${baseTypographyCss}
 
 export const NeighborhoodHealthReviewsSection: YextComponentConfig<NeighborhoodHealthReviewsSectionProps> =
   {
-    label: "Reviews Section",
+    label: msg("components.reviews", "Reviews"),
     fields: toPuckFields<NeighborhoodHealthReviewsSectionProps>(
       neighborhoodHealthReviewsFields,
     ),
@@ -542,7 +538,7 @@ export const NeighborhoodHealthReviewsSection: YextComponentConfig<NeighborhoodH
 
 export const config: SectionConfig = {
   id: "NeighborhoodHealthReviewsSection",
-  displayName: "Reviews Section",
-  description: "Reviews Section",
+  displayName: "Reviews",
+  description: "Reviews",
   pageSetTypes: ["ENTITY"],
 };

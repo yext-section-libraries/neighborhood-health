@@ -21,7 +21,6 @@ import {
 import { AnalyticsScopeProvider } from "@yext/pages-components";
 import {
   aspectRatioOptions,
-  baseTypographyCss,
   getRichTextStyleOverrides,
   getTextStyles,
   renderResolvedRichText,
@@ -214,25 +213,22 @@ const NeighborhoodHealthResourcesSectionComponent: PuckComponent<
       isEditing={puck.isEditing}
       liveVisibility={section.visibleOnLivePage}
     >
-      <style>{`
-${baseTypographyCss}
 
-      `}</style>
       <AnalyticsScopeProvider name={scopeName}>
         <Background background={section.backgroundColor}>
           <section
-            className="px-6 py-16 md:px-8 lg:px-10"
+            className="px-4 py-pageSection-verticalPadding sm:px-6"
             style={sectionSurfaceStyle}
           >
-            <div className="mx-auto grid max-w-[1600px] items-center gap-10 md:grid-cols-2 md:gap-12 lg:gap-16">
-              <div className="order-1 rounded-lg bg-white/8 p-4 md:p-6">
+            <div className="mx-auto grid max-w-pageSection-contentWidth items-center gap-10 md:grid-cols-2 md:gap-12 lg:gap-16">
+              <div className="order-1 bg-white/8 p-4 md:p-6">
                 {resolvedImage ? (
                   <EntityField
                     displayName="Image"
                     fieldId={image.image.field}
                     constantValueEnabled={image.image.constantValueEnabled}
                   >
-                    <div style={imageWrapperStyle}>
+                    <div className="rounded-image-borderRadius overflow-hidden" style={imageWrapperStyle}>
                       <Image
                         className="h-full"
                         image={resolvedImage}
@@ -249,8 +245,8 @@ ${baseTypographyCss}
                   constantValueEnabled={heading.text.constantValueEnabled}
                 >
                   <h2
-                    className="font-serif text-4xl tracking-[-0.04em] md:text-5xl"
-                    style={getTextStyles(heading.styles, heading.fontColor)}
+                    className=""
+                    style={getTextStyles(heading.styles, heading.fontColor, section.backgroundColor, streamDocument)}
                   >
                     {resolvedHeading}
                   </h2>
@@ -260,14 +256,14 @@ ${baseTypographyCss}
                   fieldId={body.text.field}
                   constantValueEnabled={body.text.constantValueEnabled}
                 >
-                  <div className="mx-auto mt-5 max-w-[46ch] text-sm leading-7 opacity-75 md:text-base">
+                  <div className="mx-auto mt-5 max-w-[46ch] opacity-75">
                     {renderResolvedRichText(
                       resolvedBodyValue,
                       bodyRichTextStyleOverrides,
                     )}
                   </div>
                 </EntityField>
-                <div aria-hidden="true" className="mt-5 text-xl leading-none">
+                <div aria-hidden="true" className="mt-5">
                   ✦
                 </div>
                 <div className="mt-8 flex justify-center">
@@ -284,7 +280,7 @@ ${baseTypographyCss}
                                 ? "border-white/40 hover:border-white"
                                 : "border-current/15 hover:border-current"
                             }`
-                          : "max-w-full whitespace-normal break-words rounded-full px-8 py-3 text-center transition hover:opacity-90"
+                          : "max-w-full whitespace-normal break-words rounded-button-borderRadius px-8 py-3 text-center transition hover:opacity-90"
                       }
                       eventName="primaryCta"
                       value={cta as Partial<ComprehensiveCTAValue>}
@@ -302,7 +298,7 @@ ${baseTypographyCss}
 
 export const NeighborhoodHealthResourcesSection: YextComponentConfig<NeighborhoodHealthResourcesSectionProps> =
   {
-    label: "Resources Section",
+    label: msg("components.resources", "Resources"),
     fields: toPuckFields<NeighborhoodHealthResourcesSectionProps>(
       neighborhoodHealthResourcesFields,
     ),
@@ -346,7 +342,7 @@ export const NeighborhoodHealthResourcesSection: YextComponentConfig<Neighborhoo
             fontWeight: "default",
             fontStyle: "default",
             textTransform: "default",
-            borderRadius: "lg",
+            borderRadius: "default",
             letterSpacing: "default",
           },
           link: {
@@ -371,7 +367,7 @@ export const NeighborhoodHealthResourcesSection: YextComponentConfig<Neighborhoo
             hasLocalizedValue: "true",
             defaultValue: {
               json: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"[[name]] is more than a clinic; we are a community partner. We provide medical support for [[address.city]] high school athletics and host monthly \\"Walk with a Doc\\" sessions at local parks to encourage heart health.","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}',
-              html: '<p dir="ltr" style="font-size: 14.67px; font-weight: 400; line-height: 18.67px; color: rgb(0, 0, 0); margin: 0; padding: 3px 2px 3px 2px; position: relative;"><span>[[name]] is more than a clinic; we are a community partner. We provide medical support for [[address.city]] high school athletics and host monthly &#34;Walk with a Doc&#34; sessions at local parks to encourage heart health.</span></p>',
+              html: '<p dir="ltr" ><span>[[name]] is more than a clinic; we are a community partner. We provide medical support for [[address.city]] high school athletics and host monthly &#34;Walk with a Doc&#34; sessions at local parks to encourage heart health.</span></p>',
             },
           },
           constantValueEnabled: true,
@@ -432,7 +428,7 @@ export const NeighborhoodHealthResourcesSection: YextComponentConfig<Neighborhoo
 
 export const config: SectionConfig = {
   id: "NeighborhoodHealthResourcesSection",
-  displayName: "Resources Section",
-  description: "Resources Section",
+  displayName: "Resources",
+  description: "Resources",
   pageSetTypes: ["ENTITY"],
 };

@@ -34,7 +34,6 @@ import {
 } from "@yext/pages-components";
 import {
   aspectRatioOptions,
-  baseTypographyCss,
   createDefaultCardCta,
   getTextStyles,
   renderResolvedRichText,
@@ -361,6 +360,8 @@ const NeighborhoodHealthFeaturedServicesSectionComponent: PuckComponent<
   const cardTitleStyle = getTextStyles(
     cardStyles.title.styles,
     cardStyles.title.fontColor,
+    section.backgroundColor,
+    streamDocument,
   );
   const cardDescriptionStyleOverrides = {
     ...cardStyles.description.styles,
@@ -401,25 +402,22 @@ const NeighborhoodHealthFeaturedServicesSectionComponent: PuckComponent<
       isEditing={puck.isEditing}
       liveVisibility={section.visibleOnLivePage}
     >
-      <style>{`
-${baseTypographyCss}
 
-      `}</style>
       <AnalyticsScopeProvider name={scopeName}>
         <Background background={section.backgroundColor}>
           <section
-            className="px-6 py-16 md:px-8 lg:px-10"
+            className="px-4 py-pageSection-verticalPadding sm:px-6"
             style={sectionSurfaceStyle}
           >
-            <div className="mx-auto max-w-[1600px]">
+            <div className="mx-auto max-w-pageSection-contentWidth">
               <EntityField
                 displayName="Heading"
                 fieldId={heading.text.field}
                 constantValueEnabled={heading.text.constantValueEnabled}
               >
                 <h2
-                  className="text-center font-serif text-4xl tracking-[-0.04em] md:text-5xl"
-                  style={getTextStyles(heading.styles, heading.fontColor)}
+                  className="text-center"
+                  style={getTextStyles(heading.styles, heading.fontColor, section.backgroundColor, streamDocument)}
                 >
                   {resolvedHeading}
                 </h2>
@@ -452,7 +450,7 @@ ${baseTypographyCss}
                       <article key={index} className="flex flex-col">
                         <div className="overflow-hidden">
                           {resolvedImage ? (
-                            <div style={imageWrapperStyle}>
+                            <div className="rounded-image-borderRadius overflow-hidden" style={imageWrapperStyle}>
                               <Image
                                 className="h-full"
                                 image={resolvedImage}
@@ -462,12 +460,12 @@ ${baseTypographyCss}
                           ) : null}
                         </div>
                         <h3
-                          className="mt-4  leading-none tracking-[-0.04em]"
+                          className="mt-4"
                           style={cardTitleStyle}
                         >
                           {resolvedTitle}
                         </h3>
-                        <div className="mt-3 leading-7 opacity-70 ">
+                        <div className="mt-3 opacity-70">
                           {renderResolvedRichText(
                             resolvedDescriptionValue,
                             cardDescriptionStyleOverrides,
@@ -521,7 +519,7 @@ ${baseTypographyCss}
 
 export const NeighborhoodHealthFeaturedServicesSection: YextComponentConfig<NeighborhoodHealthFeaturedServicesSectionProps> =
   {
-    label: "Featured Services Section",
+    label: msg("components.featuredServices", "Featured Services"),
     fields: toPuckFields<NeighborhoodHealthFeaturedServicesSectionProps>(
       neighborhoodHealthFeaturedServicesFields,
     ),
@@ -633,7 +631,7 @@ export const NeighborhoodHealthFeaturedServicesSection: YextComponentConfig<Neig
             fontStyle: "default",
             fontFamily: "default",
             fontWeight: "default",
-            borderRadius: "lg",
+            borderRadius: "default",
             letterSpacing: "default",
             textTransform: "default",
           },
@@ -649,7 +647,7 @@ export const NeighborhoodHealthFeaturedServicesSection: YextComponentConfig<Neig
 
 export const config: SectionConfig = {
   id: "NeighborhoodHealthFeaturedServicesSection",
-  displayName: "Featured Services Section",
-  description: "Featured Services Section",
+  displayName: "Featured Services",
+  description: "Featured Services",
   pageSetTypes: ["ENTITY"],
 };

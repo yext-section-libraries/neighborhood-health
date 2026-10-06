@@ -663,14 +663,20 @@ const NeighborhoodHealthLocationDetailsSectionComponent: PuckComponent<
   const cardTitleStyle = getTextStyles(
     cards.titleStyles.styles,
     cards.titleStyles.fontColor,
+    cards.backgroundColor,
+    streamDocument,
   );
   const cardSubheadingStyle = getTextStyles(
     cards.subheadingStyles.styles,
     cards.subheadingStyles.fontColor,
+    cards.backgroundColor,
+    streamDocument,
   );
   const cardContentStyle = getTextStyles(
     cards.contentStyles.styles,
     cards.contentStyles.fontColor,
+    cards.backgroundColor,
+    streamDocument,
   );
   const cardContentColor =
     getThemeColorCssValue(cards.contentStyles.fontColor) ??
@@ -707,12 +713,6 @@ const NeighborhoodHealthLocationDetailsSectionComponent: PuckComponent<
       liveVisibility={section.visibleOnLivePage}
     >
       <style>{`
-h1, h1[class] { font-family: var(--fontFamily-h1-fontFamily); font-size: var(--fontSize-h1-fontSize); line-height: 1.2; font-weight: var(--fontWeight-h1-fontWeight); font-style: var(--fontStyle-h1-fontStyle); text-transform: var(--textTransform-h1-textTransform); }
-h2, h2[class] { font-family: var(--fontFamily-h2-fontFamily); font-size: var(--fontSize-h2-fontSize); line-height: 1.2; font-weight: var(--fontWeight-h2-fontWeight); font-style: var(--fontStyle-h2-fontStyle); text-transform: var(--textTransform-h2-textTransform); }
-h3, h3[class] { font-family: var(--fontFamily-h3-fontFamily); font-size: var(--fontSize-h3-fontSize); line-height: 1.2; font-weight: var(--fontWeight-h3-fontWeight); font-style: var(--fontStyle-h3-fontStyle); text-transform: var(--textTransform-h3-textTransform); }
-h4, h4[class] { font-family: var(--fontFamily-h4-fontFamily); font-size: var(--fontSize-h4-fontSize); line-height: 1.2; font-weight: var(--fontWeight-h4-fontWeight); font-style: var(--fontStyle-h4-fontStyle); text-transform: var(--textTransform-h4-textTransform); }
-h5, h5[class] { font-family: var(--fontFamily-h5-fontFamily); font-size: var(--fontSize-h5-fontSize); line-height: 1.2; font-weight: var(--fontWeight-h5-fontWeight); font-style: var(--fontStyle-h5-fontStyle); text-transform: var(--textTransform-h5-textTransform); }
-h6, h6[class] { font-family: var(--fontFamily-h6-fontFamily); font-size: var(--fontSize-h6-fontSize); line-height: 1.2; font-weight: var(--fontWeight-h6-fontWeight); font-style: var(--fontStyle-h6-fontStyle); text-transform: var(--textTransform-h6-textTransform); }
 .yext-neighborhood-health-hours { width: 100%; min-width: 0; }
 .yext-neighborhood-health-hours .HoursTable { width: 100%; min-width: 0; max-width: 100%; }
 .yext-neighborhood-health-hours .HoursTable-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 0.75rem; width: 100%; min-width: 0; }
@@ -724,20 +724,22 @@ h6, h6[class] { font-family: var(--fontFamily-h6-fontFamily); font-size: var(--f
       <AnalyticsScopeProvider name={scopeName}>
         <Background background={section.backgroundColor}>
           <section
-            className="px-6 py-16 md:px-8 lg:px-10"
+            className="px-4 py-pageSection-verticalPadding sm:px-6"
             style={sectionSurfaceStyle}
           >
-            <div className="mx-auto max-w-[1600px]">
+            <div className="mx-auto max-w-pageSection-contentWidth">
               <EntityField
                 displayName="Section Heading"
                 fieldId={sectionHeading.text.field}
                 constantValueEnabled={sectionHeading.text.constantValueEnabled}
               >
                 <h2
-                  className="text-center font-serif text-4xl tracking-[-0.04em] md:text-5xl"
+                  className="text-center"
                   style={getTextStyles(
                     sectionHeading.styles,
                     sectionHeading.fontColor,
+                    section.backgroundColor,
+                    streamDocument,
                   )}
                 >
                   {normalizedSectionHeading}
@@ -746,7 +748,7 @@ h6, h6[class] { font-family: var(--fontFamily-h6-fontFamily); font-size: var(--f
               <BackgroundProvider value={cardBackgroundContext}>
                 <div className="mt-10 grid gap-5 xl:grid-cols-3">
                 <article
-                  className="flex h-full flex-col rounded-lg border border-current/15 px-6 py-7 shadow-sm"
+                  className="flex h-full flex-col border border-current/15 px-6 py-7 shadow-sm"
                   style={cardSurfaceStyle}
                 >
                   <EntityField
@@ -755,13 +757,13 @@ h6, h6[class] { font-family: var(--fontFamily-h6-fontFamily); font-size: var(--f
                     constantValueEnabled={informationTitle.constantValueEnabled}
                   >
                     <h3
-                      className="font-serif text-[1.9rem] leading-none tracking-[-0.04em]"
+                      className=""
                       style={cardTitleStyle}
                     >
                       {normalizedInformationTitle}
                     </h3>
                   </EntityField>
-                  <div className="mt-5 space-y-4 text-sm leading-7 md:text-base">
+                  <div className="mt-5 space-y-4">
                     <div>
                       <EntityField
                         displayName="Address Subheading"
@@ -771,7 +773,7 @@ h6, h6[class] { font-family: var(--fontFamily-h6-fontFamily); font-size: var(--f
                         }
                       >
                         <h4
-                          className="font-semibold"
+                          className=""
                           style={cardSubheadingStyle}
                         >
                           {normalizedAddressSubheading}
@@ -799,7 +801,7 @@ h6, h6[class] { font-family: var(--fontFamily-h6-fontFamily); font-size: var(--f
                       <div key={index} style={cardContentStyle}>
                         {item.label ? (
                           <h4
-                            className="font-semibold"
+                            className=""
                             style={cardSubheadingStyle}
                           >
                             {item.label}
@@ -837,7 +839,7 @@ h6, h6[class] { font-family: var(--fontFamily-h6-fontFamily); font-size: var(--f
                             }
                           >
                             <h4
-                              className="font-semibold"
+                              className=""
                               style={cardSubheadingStyle}
                             >
                               {normalizedEmailSubheading}
@@ -915,7 +917,7 @@ h6, h6[class] { font-family: var(--fontFamily-h6-fontFamily); font-size: var(--f
                 </article>
 
                 <article
-                  className="rounded-lg border border-current/15 px-6 py-7 shadow-sm"
+                  className="border border-current/15 px-6 py-7 shadow-sm"
                   style={cardSurfaceStyle}
                 >
                   <EntityField
@@ -924,7 +926,7 @@ h6, h6[class] { font-family: var(--fontFamily-h6-fontFamily); font-size: var(--f
                     constantValueEnabled={hoursTitle.constantValueEnabled}
                   >
                     <h3
-                      className="font-serif text-[1.9rem] leading-none tracking-[-0.04em]"
+                      className=""
                       style={cardTitleStyle}
                     >
                       {normalizedHoursTitle}
@@ -959,7 +961,7 @@ h6, h6[class] { font-family: var(--fontFamily-h6-fontFamily); font-size: var(--f
                 </article>
 
                 <article
-                  className="rounded-lg border border-current/15 px-6 py-7 shadow-sm"
+                  className="border border-current/15 px-6 py-7 shadow-sm"
                   style={cardSurfaceStyle}
                 >
                   <EntityField
@@ -968,13 +970,13 @@ h6, h6[class] { font-family: var(--fontFamily-h6-fontFamily); font-size: var(--f
                     constantValueEnabled={servicesTitle.constantValueEnabled}
                   >
                     <h3
-                      className="font-serif text-[1.9rem] leading-none tracking-[-0.04em]"
+                      className=""
                       style={cardTitleStyle}
                     >
                       {normalizedServicesTitle}
                     </h3>
                   </EntityField>
-                  <div className="mt-5 space-y-5 text-sm leading-7 md:text-base">
+                  <div className="mt-5 space-y-5">
                     <div>
                       <EntityField
                         displayName="Languages Subheading"
@@ -984,7 +986,7 @@ h6, h6[class] { font-family: var(--fontFamily-h6-fontFamily); font-size: var(--f
                         }
                       >
                         <h4
-                          className="font-semibold"
+                          className=""
                           style={cardSubheadingStyle}
                         >
                           {normalizedLanguagesSubheading}
@@ -1011,7 +1013,7 @@ h6, h6[class] { font-family: var(--fontFamily-h6-fontFamily); font-size: var(--f
                         }
                       >
                         <h4
-                          className="font-semibold"
+                          className=""
                           style={cardSubheadingStyle}
                         >
                           {normalizedAccessibilitySubheading}
@@ -1041,7 +1043,7 @@ h6, h6[class] { font-family: var(--fontFamily-h6-fontFamily); font-size: var(--f
                         }
                       >
                         <h4
-                          className="font-semibold"
+                          className=""
                           style={cardSubheadingStyle}
                         >
                           {normalizedServicesSubheading}
@@ -1078,7 +1080,7 @@ h6, h6[class] { font-family: var(--fontFamily-h6-fontFamily); font-size: var(--f
 
 export const NeighborhoodHealthLocationDetailsSection: YextComponentConfig<NeighborhoodHealthLocationDetailsSectionProps> =
   {
-    label: "Location Details Section",
+    label: msg("components.locationDetails", "Location Details"),
     fields: toPuckFields<NeighborhoodHealthLocationDetailsSectionProps>(
       neighborhoodHealthLocationDetailsFields,
     ),
@@ -1166,7 +1168,7 @@ export const NeighborhoodHealthLocationDetailsSection: YextComponentConfig<Neigh
           constantValue: {
             hasLocalizedValue: "true",
             defaultValue: {
-              html: '<p dir="ltr" style="font-size: 14.67px; font-weight: 400; line-height: 18.67px; color: rgb(0, 0, 0); margin: 0; padding: 3px 2px 3px 2px; position: relative;"><span>Wheelchair accessible entrances, mobility accessible routes, elevators, accessible restrooms, and patient drop-off</span></p>',
+              html: '<p dir="ltr" ><span>Wheelchair accessible entrances, mobility accessible routes, elevators, accessible restrooms, and patient drop-off</span></p>',
               json: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Wheelchair accessible entrances, mobility accessible routes, elevators, accessible restrooms, and patient drop-off","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}',
             },
           },
@@ -1309,7 +1311,7 @@ export const NeighborhoodHealthLocationDetailsSection: YextComponentConfig<Neigh
               fontStyle: "default",
               fontFamily: "default",
               fontWeight: "default",
-              borderRadius: "lg",
+              borderRadius: "default",
               letterSpacing: "default",
               textTransform: "default",
             },
@@ -1369,7 +1371,7 @@ export const NeighborhoodHealthLocationDetailsSection: YextComponentConfig<Neigh
               fontStyle: "default",
               fontFamily: "default",
               fontWeight: "default",
-              borderRadius: "lg",
+              borderRadius: "default",
               letterSpacing: "default",
               textTransform: "default",
             },
@@ -1393,7 +1395,7 @@ export const NeighborhoodHealthLocationDetailsSection: YextComponentConfig<Neigh
 
 export const config: SectionConfig = {
   id: "NeighborhoodHealthLocationDetailsSection",
-  displayName: "Location Details Section",
-  description: "Location Details Section",
+  displayName: "Location Details",
+  description: "Location Details",
   pageSetTypes: ["ENTITY"],
 };
