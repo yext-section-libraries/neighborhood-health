@@ -22,7 +22,6 @@ import {
 import { AnalyticsScopeProvider } from "@yext/pages-components";
 import {
   aspectRatioOptions,
-  baseTypographyCss,
   createDefaultStyledTextValue,
   getRichTextStyleOverrides,
   getTextStyles,
@@ -72,7 +71,7 @@ function createDefaultComprehensiveCTA(
       color: undefined,
       button: {
         ...createDefaultStyledTextValue(),
-        borderRadius: "lg",
+        borderRadius: "default",
         letterSpacing: "default",
       },
       link: {
@@ -279,25 +278,22 @@ const NeighborhoodHealthBeforeMeetingSectionComponent: PuckComponent<
       isEditing={puck.isEditing}
       liveVisibility={section.visibleOnLivePage}
     >
-      <style>{`
-${baseTypographyCss}
 
-      `}</style>
       <AnalyticsScopeProvider name={scopeName}>
         <Background background={section.backgroundColor}>
           <section
-            className="px-6 py-16 md:px-8 lg:px-10"
+            className="px-4 py-pageSection-verticalPadding sm:px-6"
             style={sectionSurfaceStyle}
           >
-            <div className="mx-auto grid max-w-[1600px] items-center gap-10 md:grid-cols-2 md:gap-12 lg:gap-16">
-              <div className="order-1 rounded-lg p-4 md:order-2 md:p-6">
+            <div className="mx-auto grid max-w-pageSection-contentWidth items-center gap-10 md:grid-cols-2 md:gap-12 lg:gap-16">
+              <div className="order-1 p-4 md:order-2 md:p-6">
                 {resolvedImage ? (
                   <EntityField
                     displayName="Image"
                     fieldId={image.image.field}
                     constantValueEnabled={image.image.constantValueEnabled}
                   >
-                    <div style={imageWrapperStyle}>
+                    <div className="rounded-image-borderRadius overflow-hidden" style={imageWrapperStyle}>
                       <Image
                         className="h-full"
                         image={resolvedImage}
@@ -314,7 +310,7 @@ ${baseTypographyCss}
                   constantValueEnabled={heading.text.constantValueEnabled}
                 >
                   <h2
-                    className="font-serif text-4xl tracking-[-0.04em] md:text-5xl"
+                    className=""
                     style={getTextStyles(
                       heading.styles,
                       heading.fontColor,
@@ -330,17 +326,17 @@ ${baseTypographyCss}
                   fieldId={body.text.field}
                   constantValueEnabled={body.text.constantValueEnabled}
                 >
-                  <div className="mx-auto mt-5 max-w-[46ch] text-sm leading-7 md:text-base">
+                  <div className="mx-auto mt-5 max-w-[46ch]">
                     {renderResolvedRichText(
                       resolvedBodyValue,
                       bodyRichTextStyleOverrides,
                     )}
                   </div>
                 </EntityField>
-                <div aria-hidden="true" className="mt-5 text-xl leading-none">
+                <div aria-hidden="true" className="mt-5">
                   ✦
                 </div>
-                <div className="mt-8 flex flex-col items-center gap-3 text-sm">
+                <div className="mt-8 flex flex-col items-center gap-3">
                   {links.map((link, index) => (
                     <EntityField
                       key={index}
@@ -377,7 +373,7 @@ ${baseTypographyCss}
 
 export const NeighborhoodHealthBeforeMeetingSection: YextComponentConfig<NeighborhoodHealthBeforeMeetingSectionProps> =
   {
-    label: "Before Meeting Section",
+    label: msg("components.beforeMeeting", "Before Meeting"),
     fields: toPuckFields<NeighborhoodHealthBeforeMeetingSectionProps>(
       neighborhoodHealthBeforeMeetingFields,
     ),
@@ -389,7 +385,7 @@ export const NeighborhoodHealthBeforeMeetingSection: YextComponentConfig<Neighbo
             hasLocalizedValue: "true",
             defaultValue: {
               json: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Review these resources before your appointment to streamline your visit.","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}',
-              html: '<p dir="ltr" style="font-size: 14.67px; font-weight: 400; line-height: 18.67px; color: rgb(0, 0, 0); margin: 0; padding: 3px 2px 3px 2px; position: relative;"><span>Review these resources before your appointment to streamline your visit.</span></p>',
+              html: '<p dir="ltr" ><span>Review these resources before your appointment to streamline your visit.</span></p>',
             },
           },
           constantValueEnabled: true,
@@ -459,7 +455,7 @@ export const NeighborhoodHealthBeforeMeetingSection: YextComponentConfig<Neighbo
                 fontWeight: "default",
                 fontStyle: "default",
                 textTransform: "default",
-                borderRadius: "lg",
+                borderRadius: "default",
                 letterSpacing: "default",
               },
               link: {
@@ -514,7 +510,7 @@ export const NeighborhoodHealthBeforeMeetingSection: YextComponentConfig<Neighbo
                 fontWeight: "default",
                 fontStyle: "default",
                 textTransform: "default",
-                borderRadius: "lg",
+                borderRadius: "default",
                 letterSpacing: "default",
               },
               link: {
@@ -569,7 +565,7 @@ export const NeighborhoodHealthBeforeMeetingSection: YextComponentConfig<Neighbo
                 fontWeight: "default",
                 fontStyle: "default",
                 textTransform: "default",
-                borderRadius: "lg",
+                borderRadius: "default",
                 letterSpacing: "default",
               },
               link: {
@@ -624,7 +620,7 @@ export const NeighborhoodHealthBeforeMeetingSection: YextComponentConfig<Neighbo
                 fontWeight: "default",
                 fontStyle: "default",
                 textTransform: "default",
-                borderRadius: "lg",
+                borderRadius: "default",
                 letterSpacing: "default",
               },
               link: {
@@ -672,7 +668,7 @@ export const NeighborhoodHealthBeforeMeetingSection: YextComponentConfig<Neighbo
 
 export const config: SectionConfig = {
   id: "NeighborhoodHealthBeforeMeetingSection",
-  displayName: "Before Meeting Section",
-  description: "Before Meeting Section",
+  displayName: "Before Meeting",
+  description: "Before Meeting",
   pageSetTypes: ["ENTITY"],
 };

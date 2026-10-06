@@ -32,7 +32,7 @@ import {
   getAnalyticsScopeHash,
   getSurfaceColorStyle,
   getThemeColorCssValue,
-  i18nPageInstance,
+  i18nPlatformInstance,
   isDarkColor,
   normalizeLink,
   normalizeThemeColorToken,
@@ -41,7 +41,6 @@ import {
 } from "@yext/visual-editor";
 import {
   aspectRatioOptions,
-  baseTypographyCss,
 } from "../shared/sectionHelpers";
 
 type SharedHeaderVariant =
@@ -205,7 +204,7 @@ const getTranslatableSummary = (
   }
 
   return (
-    resolveComponentData(value, i18nPageInstance.language, undefined) ||
+    resolveComponentData(value, i18nPlatformInstance.language, undefined) ||
     value.defaultValue ||
     fallback
   );
@@ -978,10 +977,7 @@ const NeighborhoodHealthHeaderComponent: PuckComponent<
       liveVisibility={props.section.visibleOnLivePage}
       isEditing={props.puck.isEditing}
     >
-      <style>{`
-${baseTypographyCss}
 
-      `}</style>
       <Background
         as="header"
         background={props.section.backgroundColor}
@@ -1163,7 +1159,7 @@ ${baseTypographyCss}
 
 export const NeighborhoodHealthHeader: YextComponentConfig<NeighborhoodHealthHeaderProps> =
   {
-    label: "Header",
+    label: msg("components.header", "Header"),
     fields: NeighborhoodHealthHeaderFields,
     defaultProps: {
       cta: {

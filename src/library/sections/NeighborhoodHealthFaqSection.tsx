@@ -24,7 +24,6 @@ import {
 } from "@yext/visual-editor";
 import { AnalyticsScopeProvider, useAnalytics } from "@yext/pages-components";
 import {
-  baseTypographyCss,
   getTextStyles,
   renderResolvedRichText,
   type SectionProps,
@@ -270,6 +269,8 @@ const NeighborhoodHealthFaqSectionComponent: PuckComponent<
   const questionStyle = getTextStyles(
     itemStyles.question.styles,
     itemStyles.question.fontColor,
+    section.backgroundColor,
+    streamDocument,
   );
   const answerRichTextStyleOverrides = {
     ...itemStyles.answer.styles,
@@ -285,25 +286,21 @@ const NeighborhoodHealthFaqSectionComponent: PuckComponent<
       isEditing={puck.isEditing}
       liveVisibility={section.visibleOnLivePage}
     >
-      <style>{`
-${baseTypographyCss}
-.yext-neighborhood-health-faq-question { font-family: var(--fontFamily-body-fontFamily); font-size: var(--fontSize-body-fontSize); line-height: 1.5; font-weight: var(--fontWeight-body-fontWeight); font-style: var(--fontStyle-body-fontStyle); text-transform: var(--textTransform-body-textTransform); }
-      `}</style>
       <AnalyticsScopeProvider name={scopeName}>
         <Background background={section.backgroundColor}>
           <section
-            className="px-6 py-16 md:px-8 lg:px-10"
+            className="px-4 py-pageSection-verticalPadding sm:px-6"
             style={sectionSurfaceStyle}
           >
-            <div className="mx-auto max-w-[920px]">
+            <div className="mx-auto max-w-pageSection-contentWidth">
               <EntityField
                 displayName="Heading"
                 fieldId={heading.text.field}
                 constantValueEnabled={heading.text.constantValueEnabled}
               >
                 <h2
-                  className="text-center font-serif text-4xl tracking-[-0.04em] md:text-5xl"
-                  style={getTextStyles(heading.styles, heading.fontColor)}
+                  className="text-center"
+                  style={getTextStyles(heading.styles, heading.fontColor, section.backgroundColor, streamDocument)}
                 >
                   {resolvedHeading}
                 </h2>
@@ -342,7 +339,7 @@ ${baseTypographyCss}
                         open={isOpen}
                       >
                         <summary
-                          className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-left text-sm font-semibold md:text-base"
+                          className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-left"
                           onClick={(event) => {
                             event.preventDefault();
                             setOpenIndex(isOpen ? -1 : index);
@@ -358,12 +355,12 @@ ${baseTypographyCss}
                           >
                             {resolvedQuestion}
                           </span>
-                          <span aria-hidden className="text-lg">
+                          <span aria-hidden className="">
                             {isOpen ? "−" : "+"}
                           </span>
                         </summary>
                         {isOpen ? (
-                          <div className="pb-4 text-sm leading-7 opacity-70 md:text-base">
+                          <div className="pb-4 opacity-70">
                             {renderResolvedRichText(
                               resolvedAnswerValue,
                               answerRichTextStyleOverrides,
@@ -385,7 +382,7 @@ ${baseTypographyCss}
 
 export const NeighborhoodHealthFaqSection: YextComponentConfig<NeighborhoodHealthFaqSectionProps> =
   {
-    label: "FAQ Section",
+    label: msg("components.faq", "FAQ"),
     fields: toPuckFields<NeighborhoodHealthFaqSectionProps>(
       neighborhoodHealthFaqFields,
     ),
@@ -440,7 +437,7 @@ export const NeighborhoodHealthFaqSection: YextComponentConfig<NeighborhoodHealt
 
 export const config: SectionConfig = {
   id: "NeighborhoodHealthFaqSection",
-  displayName: "FAQ Section",
-  description: "FAQ Section",
+  displayName: "FAQ",
+  description: "FAQ",
   pageSetTypes: ["ENTITY"],
 };

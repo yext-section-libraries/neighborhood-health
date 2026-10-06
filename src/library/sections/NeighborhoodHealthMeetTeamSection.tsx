@@ -32,7 +32,6 @@ import {
   type ImageType,
 } from "@yext/pages-components";
 import {
-  baseTypographyCss,
   createDefaultCardCta,
   getTextStyles,
   renderResolvedRichText,
@@ -339,14 +338,20 @@ const NeighborhoodHealthMeetTeamSectionComponent: PuckComponent<
   const nameStyle = getTextStyles(
     cardStyles.name.styles,
     cardStyles.name.fontColor,
+    section.cardBackgroundColor,
+    streamDocument,
   );
   const positionStyle = getTextStyles(
     cardStyles.position.styles,
     cardStyles.position.fontColor,
+    section.cardBackgroundColor,
+    streamDocument,
   );
   const labelStyle = getTextStyles(
     cardStyles.labels.styles,
     cardStyles.labels.fontColor,
+    section.cardBackgroundColor,
+    streamDocument,
   );
   const richTextValueStyle = {
     ...cardStyles.values.styles,
@@ -358,7 +363,6 @@ const NeighborhoodHealthMeetTeamSectionComponent: PuckComponent<
   };
   const imageWrapperStyle: React.CSSProperties = {
     aspectRatio: 1,
-    borderRadius: "999px",
     overflow: "hidden",
   };
   const imageStyle: React.CSSProperties = {
@@ -374,25 +378,24 @@ const NeighborhoodHealthMeetTeamSectionComponent: PuckComponent<
       liveVisibility={section.visibleOnLivePage}
     >
       <style>{`
-${baseTypographyCss}
-ol, ul { list-style: revert; margin: revert; padding: revert; }
+.neighborhood-health-meet-team ol, .neighborhood-health-meet-team ul { list-style: revert; margin: revert; padding: revert; }
 
       `}</style>
       <AnalyticsScopeProvider name={scopeName}>
         <Background background={section.backgroundColor}>
           <section
-            className="px-6 py-16 md:px-8 lg:px-10"
+            className="neighborhood-health-meet-team px-4 py-pageSection-verticalPadding sm:px-6"
             style={sectionSurfaceStyle}
           >
-            <div className="mx-auto max-w-[1600px]">
+            <div className="mx-auto max-w-pageSection-contentWidth">
               <EntityField
                 displayName="Heading"
                 fieldId={heading.text.field}
                 constantValueEnabled={heading.text.constantValueEnabled}
               >
                 <h2
-                  className="text-center font-serif text-4xl tracking-[-0.04em] md:text-5xl"
-                  style={getTextStyles(heading.styles, heading.fontColor)}
+                  className="text-center"
+                  style={getTextStyles(heading.styles, heading.fontColor, section.backgroundColor, streamDocument)}
                 >
                   {resolvedHeading}
                 </h2>
@@ -460,12 +463,12 @@ ol, ul { list-style: revert; margin: revert; padding: revert; }
                         background={section.cardBackgroundColor}
                       >
                         <article
-                          className="flex flex-col gap-6 rounded-lg border border-current/10 p-6 md:flex-row md:items-start"
+                          className="flex flex-col gap-6 border border-current/10 p-6 md:flex-row md:items-start"
                           style={cardSurfaceStyle}
                         >
                           <div className="mx-auto w-[140px] shrink-0 overflow-hidden md:mx-0">
                             {resolvedImage ? (
-                              <div style={imageWrapperStyle}>
+                              <div className="rounded-image-borderRadius overflow-hidden" style={imageWrapperStyle}>
                                 <Image
                                   className="h-full"
                                   image={resolvedImage}
@@ -476,18 +479,18 @@ ol, ul { list-style: revert; margin: revert; padding: revert; }
                           </div>
                           <div className="flex-1 text-center md:text-left">
                             <h3
-                              className="font-serif text-[1.9rem] leading-none tracking-[-0.04em]"
+                              className=""
                               style={nameStyle}
                             >
                               {resolvedName}
                             </h3>
                             <p
-                              className="mt-3 text-sm font-semibold md:text-base"
+                              className="mt-3"
                               style={positionStyle}
                             >
                               {resolvedRole}
                             </p>
-                            <div className="mt-4 space-y-2 text-sm leading-7 opacity-70">
+                            <div className="mt-4 space-y-2 opacity-70">
                               <p>
                                 <EntityField
                                   displayName="Credentials Label"
@@ -497,7 +500,7 @@ ol, ul { list-style: revert; margin: revert; padding: revert; }
                                   }
                                 >
                                   <strong
-                                    className="font-semibold"
+                                    className=""
                                     style={labelStyle}
                                   >
                                     {resolvedLabels.credentials}:
@@ -517,7 +520,7 @@ ol, ul { list-style: revert; margin: revert; padding: revert; }
                                   }
                                 >
                                   <strong
-                                    className="font-semibold"
+                                    className=""
                                     style={labelStyle}
                                   >
                                     {resolvedLabels.licenses}:
@@ -537,7 +540,7 @@ ol, ul { list-style: revert; margin: revert; padding: revert; }
                                   }
                                 >
                                   <strong
-                                    className="font-semibold"
+                                    className=""
                                     style={labelStyle}
                                   >
                                     {resolvedLabels.specialties}:
@@ -576,7 +579,7 @@ ol, ul { list-style: revert; margin: revert; padding: revert; }
 
 export const NeighborhoodHealthMeetTeamSection: YextComponentConfig<NeighborhoodHealthMeetTeamSectionProps> =
   {
-    label: "Meet Team Section",
+    label: msg("components.meetTeam", "Meet Team"),
     fields: toPuckFields<NeighborhoodHealthMeetTeamSectionProps>(
       neighborhoodHealthMeetTeamFields,
     ),
@@ -682,7 +685,7 @@ export const NeighborhoodHealthMeetTeamSection: YextComponentConfig<Neighborhood
 
 export const config: SectionConfig = {
   id: "NeighborhoodHealthMeetTeamSection",
-  displayName: "Meet Team Section",
-  description: "Meet Team Section",
+  displayName: "Meet Team",
+  description: "Meet Team",
   pageSetTypes: ["ENTITY"],
 };

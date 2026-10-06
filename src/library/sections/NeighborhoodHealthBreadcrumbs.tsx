@@ -1,3 +1,4 @@
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import type { PuckComponent } from "@puckeditor/core";
@@ -21,7 +22,7 @@ import {
   VisibilityWrapper,
   pt,
 } from "@yext/visual-editor";
-import { baseTypographyCss, type SectionProps } from "../shared/sectionHelpers";
+import { type SectionProps } from "../shared/sectionHelpers";
 
 type NeighborhoodHealthBreadcrumbsProps = {
   includeCurrentLocation: boolean;
@@ -123,21 +124,18 @@ const NeighborhoodHealthBreadcrumbsComponent: PuckComponent<
       isEditing={puck.isEditing}
       liveVisibility={section.visibleOnLivePage}
     >
-      <style>{`
-${baseTypographyCss}
 
-      `}</style>
       <AnalyticsScopeProvider
         name={`NeighborhoodHealthBreadcrumbs${getAnalyticsScopeHash(id)}`}
       >
         <Background
           as="section"
           background={section.backgroundColor}
-          className="border-b border-black/10 px-6 py-4 md:px-8 lg:px-10"
+          className="border-b border-current/10 px-4 py-pageSection-verticalPadding sm:px-6"
           style={sectionStyle}
         >
           <nav aria-label={t("breadcrumb", "Breadcrumb")}>
-            <ol className="mx-auto flex max-w-[1600px] flex-wrap items-center gap-y-1 text-xs uppercase tracking-[0.14em] md:text-sm">
+            <ol className="mx-auto flex max-w-pageSection-contentWidth flex-wrap items-center gap-y-1 uppercase">
               {visibleBreadcrumbs.map((breadcrumb, index) => {
                 const isCurrentLocation = index === breadcrumbs.length - 1;
                 const label =
@@ -193,7 +191,7 @@ ${baseTypographyCss}
 
 export const NeighborhoodHealthBreadcrumbs: YextComponentConfig<NeighborhoodHealthBreadcrumbsProps> =
   {
-    label: "Breadcrumbs",
+    label: msg("components.breadcrumbs", "Breadcrumbs"),
     fields: toPuckFields<NeighborhoodHealthBreadcrumbsProps>(
       neighborhoodHealthBreadcrumbsFields,
     ),

@@ -1,6 +1,5 @@
 import type { SectionConfig } from "@yext/visual-editor";
 
-import { isValidElement } from "react";
 import { PuckComponent } from "@puckeditor/core";
 import { CircleSlash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -8,7 +7,6 @@ import {
   msg,
   Body,
   EntityField,
-  MaybeRTF,
   PageSection,
   type StyledTextValue,
   type ThemeColor,
@@ -26,7 +24,7 @@ import {
   useDocument,
   pt,
 } from "@yext/visual-editor";
-import { isRichTextEmpty, type SectionProps } from "../shared/sectionHelpers";
+import { isRichTextEmpty, renderResolvedRichText, type SectionProps } from "../shared/sectionHelpers";
 
 type NeighborhoodHealthBannerProps = {
   data: {
@@ -126,12 +124,11 @@ const NeighborhoodHealthBannerComponent: PuckComponent<
       <PageSection
         background={section.backgroundColor}
         className="flex items-center justify-center"
-        verticalPadding="sm"
-      >
-        <div className="relative flex h-20 w-full flex-row items-center justify-center gap-3 rounded-lg border border-gray-200 bg-gray-100 px-4">
+        >
+        <div className="relative flex h-20 w-full flex-row items-center justify-center gap-3 border border-gray-200 bg-gray-100 px-4">
           <CircleSlash2 className="h-10 w-10 flex-shrink-0 text-gray-400" />
           <div className="flex flex-col items-start">
-            <Body className="font-medium text-gray-500" variant="sm">
+            <Body className="text-gray-500" variant="sm">
               {pt("sectionHiddenForPage", "Section hidden for this page")}
             </Body>
             <Body className="font-normal text-gray-500" variant="sm">
@@ -170,21 +167,13 @@ const NeighborhoodHealthBannerComponent: PuckComponent<
           right: "justify-end text-right",
         }[styles.textAlignment]
       }`}
-      verticalPadding="sm"
     >
       <EntityField
         constantValueEnabled={data.text.constantValueEnabled}
         displayName="Banner Text"
         fieldId={data.text.field}
       >
-        {isValidElement(resolvedText) ? (
-          resolvedText
-        ) : typeof resolvedText === "string" ? (
-          <MaybeRTF
-            data={resolvedText}
-            richTextStyleOverrides={richTextStyleOverrides}
-          />
-        ) : null}
+        {renderResolvedRichText(resolvedText, richTextStyleOverrides)}
       </EntityField>
     </PageSection>
   );
@@ -195,7 +184,7 @@ const NeighborhoodHealthBannerComponent: PuckComponent<
  */
 export const NeighborhoodHealthBanner: YextComponentConfig<NeighborhoodHealthBannerProps> =
   {
-    label: "Banner",
+    label: msg("components.banner", "Banner"),
     fields: toPuckFields<NeighborhoodHealthBannerProps>(
       NeighborhoodHealthBannerFields,
     ),

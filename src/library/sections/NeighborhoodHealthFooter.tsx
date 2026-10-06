@@ -19,7 +19,6 @@ import {
 } from "@yext/visual-editor";
 import { AnalyticsScopeProvider } from "@yext/pages-components";
 import {
-  baseTypographyCss,
   getTextStyles,
   type SectionProps,
   type StyledTextProps,
@@ -63,7 +62,7 @@ function createDefaultComprehensiveCTA(label: string): ComprehensiveCTAValue {
         fontWeight: "default",
         fontStyle: "default",
         textTransform: "default",
-        borderRadius: "lg",
+        borderRadius: "default",
         letterSpacing: "default",
       },
       link: {
@@ -173,14 +172,11 @@ const NeighborhoodHealthFooterComponent: PuckComponent<
       isEditing={puck.isEditing}
       liveVisibility={section.visibleOnLivePage}
     >
-      <style>{`
-${baseTypographyCss}
 
-      `}</style>
       <AnalyticsScopeProvider name={scopeName}>
         <Background background={section.backgroundColor}>
           <footer
-            className="px-6 py-6 md:px-8 lg:px-10"
+            className="px-4 py-pageSection-verticalPadding sm:px-6"
             style={sectionSurfaceStyle}
           >
             <div className="flex flex-col items-center gap-4 text-center md:flex-row md:gap-8 md:text-left">
@@ -190,7 +186,7 @@ ${baseTypographyCss}
                 constantValueEnabled={brandLabel.text.constantValueEnabled}
               >
                 <div
-                  className="font-serif text-2xl tracking-[-0.04em]"
+                  className=""
                   style={getTextStyles(
                     brandLabel.styles,
                     brandLabel.fontColor,
@@ -201,7 +197,7 @@ ${baseTypographyCss}
                   {resolvedBrandLabel}
                 </div>
               </EntityField>
-              <ul className="flex min-w-0 flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm md:flex-1 md:justify-start md:text-left">
+              <ul className="flex min-w-0 flex-wrap items-center justify-center gap-x-6 gap-y-2 md:flex-1 md:justify-start md:text-left">
                 {links.map((link, index) => (
                   <li key={index}>
                     <EntityField
@@ -238,7 +234,7 @@ ${baseTypographyCss}
 
 export const NeighborhoodHealthFooter: YextComponentConfig<NeighborhoodHealthFooterProps> =
   {
-    label: "Footer",
+    label: msg("components.footer", "Footer"),
     fields: toPuckFields<NeighborhoodHealthFooterProps>(
       neighborhoodHealthFooterFields,
     ),
@@ -278,7 +274,7 @@ export const NeighborhoodHealthFooter: YextComponentConfig<NeighborhoodHealthFoo
                 fontStyle: "default",
                 fontFamily: "default",
                 fontWeight: "default",
-                borderRadius: "lg",
+                borderRadius: "default",
                 letterSpacing: "default",
                 textTransform: "default",
               },
@@ -320,7 +316,7 @@ export const NeighborhoodHealthFooter: YextComponentConfig<NeighborhoodHealthFoo
                 fontStyle: "default",
                 fontFamily: "default",
                 fontWeight: "default",
-                borderRadius: "lg",
+                borderRadius: "default",
                 letterSpacing: "default",
                 textTransform: "default",
               },
@@ -362,7 +358,7 @@ export const NeighborhoodHealthFooter: YextComponentConfig<NeighborhoodHealthFoo
                 fontStyle: "default",
                 fontFamily: "default",
                 fontWeight: "default",
-                borderRadius: "lg",
+                borderRadius: "default",
                 letterSpacing: "default",
                 textTransform: "default",
               },
@@ -404,7 +400,7 @@ export const NeighborhoodHealthFooter: YextComponentConfig<NeighborhoodHealthFoo
                 fontStyle: "default",
                 fontFamily: "default",
                 fontWeight: "default",
-                borderRadius: "lg",
+                borderRadius: "default",
                 letterSpacing: "default",
                 textTransform: "default",
               },
@@ -446,7 +442,7 @@ export const NeighborhoodHealthFooter: YextComponentConfig<NeighborhoodHealthFoo
                 fontStyle: "default",
                 fontFamily: "default",
                 fontWeight: "default",
-                borderRadius: "lg",
+                borderRadius: "default",
                 letterSpacing: "default",
                 textTransform: "default",
               },

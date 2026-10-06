@@ -29,7 +29,6 @@ import {
 } from "@yext/pages-components";
 import {
   aspectRatioOptions,
-  baseTypographyCss,
   getRichTextStyleOverrides,
   getTextStyles,
   renderResolvedRichText,
@@ -338,7 +337,7 @@ const NeighborhoodHealthHeroSectionComponent: PuckComponent<
         : "";
 
     return (
-      <div className="flex items-center gap-1 text-sm font-semibold">
+      <div className="flex items-center gap-1">
         <span
           aria-hidden="true"
           className="h-[0.7rem] w-[0.7rem] shrink-0 rounded-full mr-1"
@@ -361,20 +360,14 @@ const NeighborhoodHealthHeroSectionComponent: PuckComponent<
       isEditing={puck.isEditing}
       liveVisibility={section.visibleOnLivePage}
     >
-      <style>{`
-${baseTypographyCss}
-.yext-neighborhood-health-hero-body .rtf-wrapper * {
-  color: inherit !important;
-}
 
-      `}</style>
       <AnalyticsScopeProvider name={scopeName}>
         <Background background={section.backgroundColor}>
           <section
-            className="px-6 py-10 md:px-8 md:py-14 lg:px-10 lg:py-16"
+            className="px-4 py-pageSection-verticalPadding sm:px-6"
             style={sectionSurfaceStyle}
           >
-            <div className="mx-auto grid max-w-[1600px] items-center gap-10 md:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] md:gap-12 lg:gap-16">
+            <div className="mx-auto grid max-w-pageSection-contentWidth items-center gap-10 md:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] md:gap-12 lg:gap-16">
               <div className="order-2 flex flex-col items-center text-center md:order-1">
                 <EntityField
                   displayName="Heading"
@@ -382,7 +375,7 @@ ${baseTypographyCss}
                   constantValueEnabled={heading.text.constantValueEnabled}
                 >
                   <h2
-                    className="max-w-[12ch] font-serif text-[2.4rem] leading-[0.95] tracking-[-0.05em] md:text-[3.25rem] lg:text-[4.25rem]"
+                    className="max-w-[12ch]"
                     style={getTextStyles(
                       heading.styles,
                       heading.fontColor,
@@ -411,7 +404,7 @@ ${baseTypographyCss}
                     </div>
                   </EntityField>
                 ) : null}
-                <div aria-hidden="true" className="mt-5 text-xl leading-none">
+                <div aria-hidden="true" className="mt-5">
                   ✦
                 </div>
                 <EntityField
@@ -419,7 +412,7 @@ ${baseTypographyCss}
                   fieldId={body.text.field}
                   constantValueEnabled={body.text.constantValueEnabled}
                 >
-                  <div className="yext-neighborhood-health-hero-body mt-5 max-w-[44ch] text-sm leading-7 md:text-base">
+                  <div className="yext-neighborhood-health-hero-body mt-5 max-w-[44ch]">
                     {renderResolvedRichText(
                       resolvedBodyValue,
                       bodyRichTextStyleOverrides,
@@ -479,7 +472,7 @@ ${baseTypographyCss}
                     fieldId={heroImage.image.field}
                     constantValueEnabled={heroImage.image.constantValueEnabled}
                   >
-                    <div style={imageWrapperStyle}>
+                    <div className="rounded-image-borderRadius overflow-hidden" style={imageWrapperStyle}>
                       <Image
                         className="h-full"
                         image={resolvedHeroImage}
@@ -499,7 +492,7 @@ ${baseTypographyCss}
 
 export const NeighborhoodHealthHeroSection: YextComponentConfig<NeighborhoodHealthHeroSectionProps> =
   {
-    label: "Hero Section",
+    label: msg("components.hero", "Hero"),
     fields: toPuckFields<NeighborhoodHealthHeroSectionProps>(
       neighborhoodHealthHeroFields,
     ),
@@ -617,7 +610,7 @@ export const NeighborhoodHealthHeroSection: YextComponentConfig<NeighborhoodHeal
             fontStyle: "default",
             fontFamily: "default",
             fontWeight: "default",
-            borderRadius: "lg",
+            borderRadius: "default",
             letterSpacing: "default",
             textTransform: "default",
           },
@@ -680,7 +673,7 @@ export const NeighborhoodHealthHeroSection: YextComponentConfig<NeighborhoodHeal
             fontStyle: "default",
             fontFamily: "default",
             fontWeight: "default",
-            borderRadius: "lg",
+            borderRadius: "default",
             letterSpacing: "default",
             textTransform: "default",
           },
@@ -696,7 +689,7 @@ export const NeighborhoodHealthHeroSection: YextComponentConfig<NeighborhoodHeal
 
 export const config: SectionConfig = {
   id: "NeighborhoodHealthHeroSection",
-  displayName: "Hero Section",
-  description: "Hero Section",
+  displayName: "Hero",
+  description: "Hero",
   pageSetTypes: ["ENTITY"],
 };
