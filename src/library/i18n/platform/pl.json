@@ -137,6 +137,7 @@
     "logoImage": "Obraz logo",
     "longitude": "Długość geograficzna",
     "map": "Mapa",
+    "mapStartingZoom": "Początkowy poziom powiększenia mapy",
     "mapboxMapStyle": "Styl mapy Mapbox",
     "mapStyle": "Styl mapy",
     "memberCallToActions": "Wezwania do działania dla członków",

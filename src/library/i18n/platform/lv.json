@@ -136,6 +136,7 @@
     "logoImage": "Logotipa attēls",
     "longitude": "Garums",
     "map": "Karte",
+    "mapStartingZoom": "Kartes sākotnējais tālummaiņas līmenis",
     "mapboxMapStyle": "Mapbox kartes stils",
     "mapStyle": "Kartes stils",
     "memberCallToActions": "Dalībnieku aicinājumi uz darbību",
