@@ -135,6 +135,7 @@
     "logoImage": "Logo Image",
     "longitude": "Longitude",
     "map": "Map",
+    "mapStartingZoom": "Map Starting Zoom",
     "mapboxMapStyle": "Mapbox Map Style",
     "mapStyle": "Map Style",
     "memberCallToActions": "Member Calls to Action",

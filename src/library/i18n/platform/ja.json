@@ -134,6 +134,7 @@
     "logoImage": "ロゴ画像",
     "longitude": "経度",
     "map": "地図",
+    "mapStartingZoom": "地図の初期ズームレベル",
     "mapboxMapStyle": "Mapbox マップスタイル",
     "mapStyle": "マップスタイル",
     "memberCallToActions": "メンバーの行動喚起",
